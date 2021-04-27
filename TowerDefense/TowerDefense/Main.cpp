@@ -51,7 +51,6 @@ int main(int argc, char* args[])
     SDL_RenderFillRect(sdlRenderer, &sdlRect);
     SDL_RenderFillRect(sdlRenderer, &sdlRect2);
 
-    //Test
 
     // and show result
     SDL_RenderPresent(sdlRenderer);
