@@ -75,7 +75,7 @@ int main(int argc, char* args[])
             }
         }
     }
-
+    // Testen
     // clean up
     SDL_DestroyWindow(sdlWindow);
     // finish
