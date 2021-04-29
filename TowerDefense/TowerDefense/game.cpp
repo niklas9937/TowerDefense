@@ -1,6 +1,6 @@
-#include "game.h"
 
 #include <iostream>
+#include "game.h"
 
 
 
@@ -149,6 +149,7 @@ int Game::init(int width, int height) {
             SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 0xff);
         }
     }
+
     /*
     SDL_Rect sdlRect = { 0, 0, 32, 32 };
     SDL_Rect sdlRect2 = { 150, 50, 35, 35 };
@@ -186,7 +187,15 @@ int Game::init(int width, int height) {
     return 0;
 }
 
+int Game::setDefense(int xC, int yC, AffinityType type) {
+    Point p; 
+    p.x = xC;
+    p.y = yC;
+    Defense defense(type,p);
 
+    towerArray[0] = defense;
+    return 0;
+}
 
 
 void Game::loop() {

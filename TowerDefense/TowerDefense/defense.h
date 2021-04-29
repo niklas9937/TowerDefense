@@ -2,21 +2,19 @@
 #ifndef defense_h
 #define defense_h
 #include <stdio.h>
+#include "structs.h"
+
 
 class Defense {
-
+	
 public:
 	Defense();
-	enum AffinityType { small, medium, large, fire, water, wind, lightning, plant, toxic };
+	Defense(AffinityType, Point);
+	
 private:
 	AffinityType affinity;
 	int range;
-	typedef struct Point 
-	{ 
-		int x; 
-		int y;
-
-	}posi;
+	Point posi;
 };
 
 #endif 
