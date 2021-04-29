@@ -2,9 +2,9 @@
 #include <iostream>
 #include "game.h"
 
+#include <string>
 
-
-
+using namespace std;
 
 Game::Game()
 {
@@ -130,7 +130,6 @@ int Game::init(int width, int height) {
     field[21][13] = weg;
     field[21][12] = weg;
     field[21][11] = weg;
-    field[24][19] = weg;
 
     field[21][10] = burg;
     for(int i = 0; i< xField; i++)
@@ -150,34 +149,122 @@ int Game::init(int width, int height) {
         }
     }
 
-    /*
-    SDL_Rect sdlRect = { 0, 0, 32, 32 };
-    SDL_Rect sdlRect2 = { 150, 50, 35, 35 };
-    SDL_RenderFillRect(m_renderer, &sdlRect);
-    SDL_RenderFillRect(m_renderer, &sdlRect2);
-    */
+    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 0xff);
 
-    // and show result
+    towers[0][0] = small;
+    towers[1][0] = medium;
+    towers[2][0] = large;
+    towers[0][1] = fire;
+    towers[1][1] = water;
+    towers[2][1] = wind;
+    towers[0][2] = lightning;
+    towers[1][2] = plant;
+    towers[2][2] = toxic;
+
+    int hX = 21;
+    int hY = 21;
+    int indexBild = 1;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            SDL_Rect sdlRect = { ((hX+i) * 32), ((hY+j) * 32), 32, 32 };
+            SDL_RenderDrawRect(m_renderer, &sdlRect);
+            std::cout << towers[i][j];
+            SDL_Surface* image = SDL_LoadBMP("small.bmp");
+            switch (indexBild)
+            {
+                case 1: image = SDL_LoadBMP("small.bmp"); break;
+                case 2: image = SDL_LoadBMP("medium.bmp"); break;
+                case 3: image = SDL_LoadBMP("large.bmp"); break;
+                case 4: image = SDL_LoadBMP("fire.bmp"); break;
+                case 5: image = SDL_LoadBMP("water.bmp"); break;
+                case 6: image = SDL_LoadBMP("wind.bmp"); break;
+                case 7: image = SDL_LoadBMP("lightning.bmp"); break;
+                case 8: image = SDL_LoadBMP("plant.bmp"); break;
+                case 9: image = SDL_LoadBMP("toxic.bmp"); break;
+            }
+
+            SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
+            SDL_RenderCopy(m_renderer, texture, NULL,&sdlRect);
+            SDL_RenderPresent(m_renderer);
+            indexBild += 1;
+        }
+    }
+
     SDL_RenderPresent(m_renderer);
 
     bool quit = false;
     SDL_Event e;
     int xMouse, yMouse;
     int xwindow, ywindow;
+    AffinityType selected = nothing;
     while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
-            if (SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
+            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
                 SDL_GetGlobalMouseState(&xMouse, &yMouse);
                 SDL_GetWindowPosition(m_window, &xwindow, &ywindow);
                 xMouse = xMouse - xwindow;
                 yMouse = yMouse - ywindow;
                 std::cout << xMouse << " " << yMouse << std::endl;
+                xMouse = xMouse / 32;
+                int x = (int)xMouse;
+                yMouse = yMouse / 32;
+                int y = (int)yMouse;
+
+
+
+                if (x < xField && y < yField)
+                {
+                    if (field[x][y] == gras && selected != nothing)
+                    {
+                        int h = setDefense(x, y, selected);
+                        SDL_SetRenderDrawColor(m_renderer, 100, 100, 100, 0xff);
+                        SDL_Rect sdlRect = { (x * 32), (y * 32), 32, 32 };
+                        //SDL_RenderFillRect(m_renderer, &sdlRect);
+
+                        SDL_Surface* image = SDL_LoadBMP("small.bmp");
+                        switch (selected)
+                        {
+                        case 1: image = SDL_LoadBMP("small.bmp"); break;
+                        case 2: image = SDL_LoadBMP("medium.bmp"); break;
+                        case 3: image = SDL_LoadBMP("large.bmp"); break;
+                        case 4: image = SDL_LoadBMP("fire.bmp"); break;
+                        case 5: image = SDL_LoadBMP("water.bmp"); break;
+                        case 6: image = SDL_LoadBMP("wind.bmp"); break;
+                        case 7: image = SDL_LoadBMP("lightning.bmp"); break;
+                        case 8: image = SDL_LoadBMP("plant.bmp"); break;
+                        case 9: image = SDL_LoadBMP("toxic.bmp"); break;
+                        }
+
+                        SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
+                        SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
+
+
+
+                        SDL_RenderPresent(m_renderer);
+                    }
+                }
+                else
+                {
+                    x = x - 21;
+                    y = y - 21;
+                    selected = towers[x][y];
+
+                }
+
+                
+            }
+            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_RIGHT)
+            {
+                selected = nothing;
             }
         }
     }
+    
     // Testen
     // clean up
     SDL_DestroyWindow(m_window);
@@ -193,7 +280,10 @@ int Game::setDefense(int xC, int yC, AffinityType type) {
     p.y = yC;
     Defense defense(type,p);
 
-    towerArray[0] = defense;
+    towerArray[indexTowerArray] = defense;
+    indexTowerArray += 1;
+
+
     return 0;
 }
 

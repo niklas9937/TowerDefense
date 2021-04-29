@@ -21,8 +21,10 @@ public:
 	void cleanup();
 	int setDefense(int xC, int yC, AffinityType type);
 	Terrain field[xField][yField];
+	AffinityType towers[3][3];
 private:
-
+	int indexTowerArray = 0;
+	int indexEnemyArray = 0;
     Defense towerArray[MaxTower];
 	Enemy enemyArray[MaxEnemy];
 	int height;
