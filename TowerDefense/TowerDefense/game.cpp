@@ -30,13 +30,13 @@ int Game::init(int width, int height) {
         return false;
     }
     m_renderer = SDL_CreateRenderer(m_window, -1, 0);
-    SDL_SetRenderDrawColor(m_renderer, 0x00, 0xa0, 0x00, 0x00);
+    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
     // 2. clear all
     SDL_RenderClear(m_renderer);
 
     // draw a rect
     // 1. set color to cyan (r, g, b, a)
-    SDL_SetRenderDrawColor(m_renderer, 0xa0, 0xa0, 0xff, 0xff);
+    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
     // specify recht
     // clear background: 1. specify rect
     
@@ -130,7 +130,7 @@ int Game::init(int width, int height) {
     field[21][13] = weg;
     field[21][12] = weg;
     field[21][11] = weg;
-
+    field[24][19] = weg;
 
     field[21][10] = burg;
     for(int i = 0; i< xField; i++)
@@ -146,7 +146,7 @@ int Game::init(int width, int height) {
             }
             SDL_Rect sdlRect = { (i*32), (j * 32), 32, 32 };
             SDL_RenderFillRect(m_renderer, &sdlRect);
-            SDL_SetRenderDrawColor(m_renderer, 0xa0, 0xa0, 0xff, 0xff);
+            SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 0xff);
         }
     }
     /*

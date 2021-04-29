@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <SDL.h>
-#define xField 32
-#define yField 28
+#define xField 25
+#define yField 20
 class Game
 {
 public:
