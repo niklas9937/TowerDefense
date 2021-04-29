@@ -2,7 +2,7 @@
 
 int init()
 {
-	Game()
+	Game::Game()
 	{
 
 	}
