@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <iostream>
+#include "game.h"
+
 //Screen dimension constants
 const int WinWidth = 800;
 const int WinHeight = 400;
@@ -9,7 +11,24 @@ int in_rect(int x, int y, struct SDL_Rect* r) {
     return (x >= r->x) && (y >= r->y) &&
         (x < r->x + r->w) && (y < r->y + r->h);
 }
+
+
+
+
 int main(int argc, char* args[])
+{
+    Game game;
+    if (!game.init(WinWidth, WinHeight))
+    {
+        return -1;
+    }
+    return 0;
+}
+
+
+
+
+int hi(int argc, char* args[])
 {
     // init sdl with video subsystem only and check if succeeded
     if (SDL_Init(SDL_INIT_VIDEO) < 0)

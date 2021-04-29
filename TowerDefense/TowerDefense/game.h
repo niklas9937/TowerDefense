@@ -3,7 +3,8 @@
 #define game_h
 
 #include <stdio.h>
-#include "SDL.h"
+#include <SDL.h>
+
 class Game
 {
 public:
@@ -14,5 +15,7 @@ public:
 private:
 	int height;
 	int width;
+	SDL_Window* m_window;
+	SDL_Renderer* m_renderer;
 };
 #endif
