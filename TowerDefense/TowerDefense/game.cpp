@@ -168,9 +168,9 @@ int Game::init(int width, int height) {
     {
         for (int j = 0; j < 3; j++)
         {
-            SDL_Rect sdlRect = { ((hX+i) * 32), ((hY+j) * 32), 32, 32 };
+            SDL_Rect sdlRect = { ((hX+j) * 32), ((hY+i) * 32), 32, 32 };
             SDL_RenderDrawRect(m_renderer, &sdlRect);
-            std::cout << towers[i][j];
+            std::cout << towers[j][i];
             SDL_Surface* image = SDL_LoadBMP("small.bmp");
             switch (indexBild)
             {
