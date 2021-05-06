@@ -214,10 +214,11 @@ int Game::init(int width, int height) {
 
 
     SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
+
     SDL_RenderPresent(m_renderer);
 
-    SDL_FreeSurface(surfaceMessage);
-    SDL_DestroyTexture(Message);
+    //SDL_FreeSurface(surfaceMessage);
+    //SDL_DestroyTexture(Message);
 
     bool quit = false;
     SDL_Event e;
