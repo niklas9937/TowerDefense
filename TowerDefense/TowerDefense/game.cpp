@@ -20,6 +20,8 @@ int Game::init(int width, int height) {
     height = height;
     width = height;
     TTF_Init();
+    IMG_Init(IMG_INIT_PNG);
+
     m_window = SDL_CreateWindow("SDL Window",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
@@ -108,7 +110,7 @@ void Game::cleanup()
     // finish
     SDL_Quit();
     TTF_Quit();
-    
+    IMG_Quit();
 
 
 }
@@ -281,7 +283,7 @@ void Game::loadLevel()
 void Game::render()
 {
 
-    
+    //SDL_RenderClear(m_renderer);
 
     // Türme auf dem Spielfeld laden
 
@@ -332,14 +334,14 @@ void Game::render()
             SDL_Rect sdlRect = { (enemyArray[i].getXPosi()), (enemyArray[i].getYPosi()), 32, 32 };
             //SDL_RenderFillRect(m_renderer, &sdlRect);
 
-            SDL_Surface* image = SDL_LoadBMP("medium.bmp");
+            SDL_Surface* image = SDL_LoadBMP("goblin.bmp");
             switch (enemyArray[i].getType())
             {
-            case 1: image = SDL_LoadBMP("medium.bmp"); break;
+            case 1: image = SDL_LoadBMP("goblin.bmp"); break;
             case 2: image = SDL_LoadBMP("medium.bmp"); break;
             case 3: image = SDL_LoadBMP("large.bmp"); break;
             }
-
+            //SDL_Texture* texture = IMG_LoadTexture(m_renderer, "Unbenannt.png");
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
 
