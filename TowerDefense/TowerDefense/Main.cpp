@@ -7,10 +7,7 @@
 //Screen dimension constants
 const int WinWidth = 800;
 const int WinHeight = 800;
-int in_rect(int x, int y, struct SDL_Rect* r) {
-    return (x >= r->x) && (y >= r->y) &&
-        (x < r->x + r->w) && (y < r->y + r->h);
-}
+
 
 
 

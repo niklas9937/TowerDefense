@@ -2,7 +2,7 @@
 
 #ifndef structs_h
 #define structs_h
-enum EnemyType {goblin, goblin_knite, slim_goblin };
+enum EnemyType { notEnemy, goblin, goblin_knite, slim_goblin };
 enum AffinityType { nothing, small, medium, large, fire, water, wind, lightning, plant, toxic };
 
 typedef struct Point

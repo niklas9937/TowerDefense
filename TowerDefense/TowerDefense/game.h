@@ -8,6 +8,7 @@
 #include "defense.h"
 #include "enemy.h"
 #include <SDL_ttf.h>
+
 #define xField 25
 #define yField 20
 #define MaxTower 20
@@ -20,9 +21,13 @@ public:
 	int init(int width, int height);
 	void loop();
 	void cleanup();
-	int setDefense(int xC, int yC, AffinityType type);
+	int setDefense(int xC, int yC, AffinityType type, int price);
+	int setEnemy(int xC, int yC, EnemyType type);
 	Terrain field[xField][yField];
 	AffinityType towers[3][3];
+	void render();
+	void loadLevel();
+	void goEnemy(int index);
 private:
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;
@@ -32,6 +37,7 @@ private:
 	int width;
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
+	int gold = 300;
 	
 };
 #endif

@@ -9,12 +9,16 @@ class Defense {
 	
 public:
 	Defense();
-	Defense(AffinityType, Point);
-	
+	Defense(AffinityType, Point,int);
+	int getXPosi();
+	int getYPosi();
+	AffinityType getAffinity();
+	int getPrice();
 private:
 	AffinityType affinity;
 	int range;
 	Point posi;
+	int price;
 };
 
 #endif 

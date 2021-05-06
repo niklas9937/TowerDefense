@@ -1,6 +1,8 @@
 
 #include <iostream>
 #include "game.h"
+#include <string>
+#include <sstream>
 
 #include <string>
 
@@ -17,7 +19,7 @@ int Game::init(int width, int height) {
     }
     height = height;
     width = height;
-
+    TTF_Init();
     m_window = SDL_CreateWindow("SDL Window",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
@@ -30,16 +32,94 @@ int Game::init(int width, int height) {
         return false;
     }
     m_renderer = SDL_CreateRenderer(m_window, -1, 0);
-    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
-    // 2. clear all
-    SDL_RenderClear(m_renderer);
-
-    // draw a rect
-    // 1. set color to cyan (r, g, b, a)
-    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
-    // specify recht
-    // clear background: 1. specify rect
     
+    loadLevel();
+    int k = setEnemy(0, 96, goblin);
+    render();
+
+
+    
+
+    bool quit = false;
+    SDL_Event e;
+    int xMouse, yMouse;
+    int xwindow, ywindow;
+    AffinityType selected = nothing;
+    while (!quit) {
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_QUIT) {
+                quit = true;
+            }
+            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
+
+                SDL_GetGlobalMouseState(&xMouse, &yMouse);
+                SDL_GetWindowPosition(m_window, &xwindow, &ywindow);
+                xMouse = xMouse - xwindow;
+                yMouse = yMouse - ywindow;
+                std::cout << xMouse << " " << yMouse << std::endl;
+                xMouse = xMouse / 32;
+                int x = (int)xMouse;
+                yMouse = yMouse / 32;
+                int y = (int)yMouse;
+
+
+
+                if (x < xField && y < yField)
+                {
+                    if (field[x][y] == gras && selected != nothing)
+                    {
+
+                        int price = selected * 10;
+                        if (gold - price > 0)
+                        {
+                            int h = setDefense(x, y, selected, price);
+                            gold = gold - price;
+                        }
+                        
+                        render();
+                    }
+                }
+                else
+                {
+                    x = x - 21;
+                    y = y - 21;
+                    selected = towers[x][y];
+
+                }
+
+                
+            }
+            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_RIGHT)
+            {
+                selected = nothing;
+            }
+        }
+        render();
+    }
+    
+    cleanup();
+    return 0;
+}
+
+void Game::cleanup()
+{
+
+    SDL_DestroyWindow(m_window);
+    // finish
+    SDL_Quit();
+    TTF_Quit();
+    
+
+
+}
+
+
+void Game::loadLevel()
+{
+    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
+    SDL_RenderClear(m_renderer);
+    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+
     field[0][3] = weg;
     field[1][3] = weg;
     field[2][3] = weg;
@@ -132,7 +212,7 @@ int Game::init(int width, int height) {
     field[21][11] = weg;
 
     field[21][10] = burg;
-    for(int i = 0; i< xField; i++)
+    for (int i = 0; i < xField; i++)
     {
         for (int j = 0; j < yField; j++)
         {
@@ -143,7 +223,7 @@ int Game::init(int width, int height) {
             case gras: SDL_SetRenderDrawColor(m_renderer, 0, 153, 0, 255); break;
             case burg: SDL_SetRenderDrawColor(m_renderer, 131, 139, 139, 255);  break;
             }
-            SDL_Rect sdlRect = { (i*32), (j * 32), 32, 32 };
+            SDL_Rect sdlRect = { (i * 32), (j * 32), 32, 32 };
             SDL_RenderFillRect(m_renderer, &sdlRect);
             SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 0xff);
         }
@@ -170,141 +250,139 @@ int Game::init(int width, int height) {
     {
         for (int j = 0; j < 3; j++)
         {
-            SDL_Rect sdlRect = { ((hX+j) * 32), ((hY+i) * 32), 32, 32 };
+            SDL_Rect sdlRect = { ((hX + j) * 32), ((hY + i) * 32), 32, 32 };
             SDL_RenderDrawRect(m_renderer, &sdlRect);
-            std::cout << towers[j][i];
             SDL_Surface* image = SDL_LoadBMP("small.bmp");
             switch (indexBild)
             {
-                case 1: image = SDL_LoadBMP("small.bmp"); break;
-                case 2: image = SDL_LoadBMP("medium.bmp"); break;
-                case 3: image = SDL_LoadBMP("large.bmp"); break;
-                case 4: image = SDL_LoadBMP("fire.bmp"); break;
-                case 5: image = SDL_LoadBMP("water.bmp"); break;
-                case 6: image = SDL_LoadBMP("wind.bmp"); break;
-                case 7: image = SDL_LoadBMP("lightning.bmp"); break;
-                case 8: image = SDL_LoadBMP("plant.bmp"); break;
-                case 9: image = SDL_LoadBMP("toxic.bmp"); break;
+            case 1: image = SDL_LoadBMP("small.bmp"); break;
+            case 2: image = SDL_LoadBMP("medium.bmp"); break;
+            case 3: image = SDL_LoadBMP("large.bmp"); break;
+            case 4: image = SDL_LoadBMP("fire.bmp"); break;
+            case 5: image = SDL_LoadBMP("water.bmp"); break;
+            case 6: image = SDL_LoadBMP("wind.bmp"); break;
+            case 7: image = SDL_LoadBMP("lightning.bmp"); break;
+            case 8: image = SDL_LoadBMP("plant.bmp"); break;
+            case 9: image = SDL_LoadBMP("toxic.bmp"); break;
             }
 
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
-            SDL_RenderCopy(m_renderer, texture, NULL,&sdlRect);
+            SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
             SDL_RenderPresent(m_renderer);
             indexBild += 1;
         }
     }
 
     SDL_RenderPresent(m_renderer);
+    SDL_SetRenderDrawColor(m_renderer, 0xff, 0xff, 0xff, 0xff);
+
+}
+
+void Game::render()
+{
+
+    
+
+    // Türme auf dem Spielfeld laden
+
+    int n = size(towerArray);
+
+    for (int i = 0; i < n; i++)
+    {
+        if (towerArray[i].getAffinity()!= nothing)
+        {
+            SDL_SetRenderDrawColor(m_renderer, 100, 100, 100, 0xff);
+
+            SDL_Rect sdlRect = { (towerArray[i].getXPosi() * 32), (towerArray[i].getYPosi() * 32), 32, 32 };
+            //SDL_RenderFillRect(m_renderer, &sdlRect);
+
+            SDL_Surface* image = SDL_LoadBMP("small.bmp");
+            switch (towerArray[i].getAffinity())
+            {
+            case 1: image = SDL_LoadBMP("small.bmp"); break;
+            case 2: image = SDL_LoadBMP("medium.bmp"); break;
+            case 3: image = SDL_LoadBMP("large.bmp"); break;
+            case 4: image = SDL_LoadBMP("fire.bmp"); break;
+            case 5: image = SDL_LoadBMP("water.bmp"); break;
+            case 6: image = SDL_LoadBMP("wind.bmp"); break;
+            case 7: image = SDL_LoadBMP("lightning.bmp"); break;
+            case 8: image = SDL_LoadBMP("plant.bmp"); break;
+            case 9: image = SDL_LoadBMP("toxic.bmp"); break;
+            }
+
+            SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
+            SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
+
+
+
+            SDL_RenderPresent(m_renderer);
+        }
+    }
+
+    // Gegner auf dem Spielfeld laden
+    n = size(enemyArray);
+
+    for (int i = 0; i < n; i++)
+    {
+        if (enemyArray[i].getType() != notEnemy)
+        {
+            SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
+
+            SDL_Rect sdlRect = { (enemyArray[i].getXPosi()), (enemyArray[i].getYPosi()), 32, 32 };
+            //SDL_RenderFillRect(m_renderer, &sdlRect);
+
+            SDL_Surface* image = SDL_LoadBMP("Goblin.bmp");
+            switch (enemyArray[i].getType())
+            {
+            case 1: image = SDL_LoadBMP("Goblin.bmp"); break;
+            case 2: image = SDL_LoadBMP("medium.bmp"); break;
+            case 3: image = SDL_LoadBMP("large.bmp"); break;
+            }
+
+            SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
+            SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
+
+            SDL_RenderPresent(m_renderer);
+            goEnemy(i);
+        }
+    }
+
+
+
+ 
 
     // Gold anzeigen
 
-    TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24);
+    TTF_Font* Sans = TTF_OpenFont("arial.ttf", 20);
+    SDL_Color White = { 0xff, 0xff, 0xff };
 
-    SDL_Color White = { 255, 255, 255 };  
-
-    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "put your text here", White); 
-    SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage); 
-
-
-    SDL_Rect Message_rect; //create a rect
-    Message_rect.x = 700;  //controls the rect's x coordinate 
-    Message_rect.y = 400; // controls the rect's y coordinte
-    Message_rect.w = 100; // controls the width of the rect
-    Message_rect.h = 100; // controls the height of the rect
+    std::ostringstream oss;
+    oss << "Gold: " << gold;
+    std::string var = oss.str();
 
 
+
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), White);
+    SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
+    SDL_Rect Message_rect = { 350,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
     SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
 
+
     SDL_RenderPresent(m_renderer);
-
-    //SDL_FreeSurface(surfaceMessage);
-    //SDL_DestroyTexture(Message);
-
-    bool quit = false;
-    SDL_Event e;
-    int xMouse, yMouse;
-    int xwindow, ywindow;
-    AffinityType selected = nothing;
-    while (!quit) {
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) {
-                quit = true;
-            }
-            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
-                SDL_GetGlobalMouseState(&xMouse, &yMouse);
-                SDL_GetWindowPosition(m_window, &xwindow, &ywindow);
-                xMouse = xMouse - xwindow;
-                yMouse = yMouse - ywindow;
-                std::cout << xMouse << " " << yMouse << std::endl;
-                xMouse = xMouse / 32;
-                int x = (int)xMouse;
-                yMouse = yMouse / 32;
-                int y = (int)yMouse;
-
-
-
-                if (x < xField && y < yField)
-                {
-                    if (field[x][y] == gras && selected != nothing)
-                    {
-                        int h = setDefense(x, y, selected);
-                        SDL_SetRenderDrawColor(m_renderer, 100, 100, 100, 0xff);
-                        SDL_Rect sdlRect = { (x * 32), (y * 32), 32, 32 };
-                        //SDL_RenderFillRect(m_renderer, &sdlRect);
-
-                        SDL_Surface* image = SDL_LoadBMP("small.bmp");
-                        switch (selected)
-                        {
-                        case 1: image = SDL_LoadBMP("small.bmp"); break;
-                        case 2: image = SDL_LoadBMP("medium.bmp"); break;
-                        case 3: image = SDL_LoadBMP("large.bmp"); break;
-                        case 4: image = SDL_LoadBMP("fire.bmp"); break;
-                        case 5: image = SDL_LoadBMP("water.bmp"); break;
-                        case 6: image = SDL_LoadBMP("wind.bmp"); break;
-                        case 7: image = SDL_LoadBMP("lightning.bmp"); break;
-                        case 8: image = SDL_LoadBMP("plant.bmp"); break;
-                        case 9: image = SDL_LoadBMP("toxic.bmp"); break;
-                        }
-
-                        SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
-                        SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
-
-
-
-                        SDL_RenderPresent(m_renderer);
-                    }
-                }
-                else
-                {
-                    x = x - 21;
-                    y = y - 21;
-                    selected = towers[x][y];
-
-                }
-
-                
-            }
-            if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_RIGHT)
-            {
-                selected = nothing;
-            }
-        }
-    }
-    
-    // Testen
-    // clean up
-    SDL_DestroyWindow(m_window);
-    // finish
-    SDL_Quit();
-
-    return 0;
+    SDL_FreeSurface(surfaceMessage);
+    SDL_DestroyTexture(Message);
 }
 
-int Game::setDefense(int xC, int yC, AffinityType type) {
+
+
+
+
+
+int Game::setDefense(int xC, int yC, AffinityType type,int price) {
     Point p; 
     p.x = xC;
     p.y = yC;
-    Defense defense(type,p);
+    Defense defense(type,p,price);
 
     towerArray[indexTowerArray] = defense;
     indexTowerArray += 1;
@@ -313,10 +391,61 @@ int Game::setDefense(int xC, int yC, AffinityType type) {
     return 0;
 }
 
+int Game::setEnemy(int xC, int yC, EnemyType type)
+{   
+    Point p;
+    p.x = xC;
+    p.y = yC;
 
-void Game::loop() {
+    Enemy enemy(type, p);
+    enemyArray[indexEnemyArray] = enemy;
+    indexEnemyArray += 1;
+
+
+    return 0;
+}
+
+void Game::goEnemy(int index)
+{
+    Enemy gegner = enemyArray[index];
+
+    int xC = gegner.getXPosi();
+    int yC = gegner.getYPosi();
+
+    float hilfe1 = xC / 32;
+    xC = int(hilfe1);
+
+    float hilfe2 = yC / 32;
+    yC = int(hilfe2);
+
+    if (field[xC + 1][yC] == weg) // nach rechts
+    {
+        Point p;
+        p.x = gegner.getXPosi()+1;
+        p.y = gegner.getYPosi();
+        enemyArray[index].setPosi(p);
+    }
+    else if (field[xC][yC+1] == weg) // nach unten
+    {
+        Point p;
+        p.x = gegner.getXPosi();
+        p.y = gegner.getYPosi()+1;
+        enemyArray[index].setPosi(p);
+    }
+    else if (field[xC][yC - 1] == weg) // nach oben
+    {
+        Point p;
+        p.x = gegner.getXPosi();
+        p.y = gegner.getYPosi() -1;
+        enemyArray[index].setPosi(p);
+    }
+    else if (field[xC + 1][yC] == burg || field[xC][yC + 1] == burg || field[xC][yC - 1] == burg)
+    {
+
+    }
 
 }
-void Game::cleanup() {
+
+void Game::loop() {
 
 }
