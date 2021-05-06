@@ -7,6 +7,7 @@
 #include "structs.h"
 #include "defense.h"
 #include "enemy.h"
+#include <SDL_ttf.h>
 #define xField 25
 #define yField 20
 #define MaxTower 20
