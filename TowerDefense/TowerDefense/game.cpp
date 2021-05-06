@@ -322,6 +322,7 @@ void Game::render()
     // Gegner auf dem Spielfeld laden
     n = size(enemyArray);
 
+    SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
     for (int i = 0; i < n; i++)
     {
         if (enemyArray[i].getType() != notEnemy)
@@ -331,10 +332,10 @@ void Game::render()
             SDL_Rect sdlRect = { (enemyArray[i].getXPosi()), (enemyArray[i].getYPosi()), 32, 32 };
             //SDL_RenderFillRect(m_renderer, &sdlRect);
 
-            SDL_Surface* image = SDL_LoadBMP("Goblin.bmp");
+            SDL_Surface* image = SDL_LoadBMP("medium.bmp");
             switch (enemyArray[i].getType())
             {
-            case 1: image = SDL_LoadBMP("Goblin.bmp"); break;
+            case 1: image = SDL_LoadBMP("medium.bmp"); break;
             case 2: image = SDL_LoadBMP("medium.bmp"); break;
             case 3: image = SDL_LoadBMP("large.bmp"); break;
             }
