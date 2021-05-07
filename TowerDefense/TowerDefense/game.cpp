@@ -283,6 +283,37 @@ void Game::loadLevel()
 
 }
 
+
+/*
+void Game::renderGoblin()
+{
+    SDL_Texture* goblin_texture = nullptr;
+    auto surface = IMG_Load("goblin.png");
+    if (!surface)
+    {
+        std::cerr << "Failed to create surface.\n";
+    }
+    goblin_texture = SDL_CreateTextureFromSurface(m_renderer,surface);
+    if (!goblin_texture)
+    {
+        std::cerr << "failed to create texture.\n";
+        }
+    // Das hier drüber muss später in eine eigene Methode und goblin:texture muss ein Datenfeld sein.        
+    
+    
+    SDL_Rect rect = { 0xff, 0xff, 32, 32 }; //posi {X, Y, breite, höhe}
+    if (goblin_texture)
+    {
+        SDL_RenderCopy(m_renderer, goblin_texture, nullptr, &rect);
+    }
+    else {
+        SDL_SetRenderDrawColor(m_renderer, 0xff, 0xff, 0xff, 0xff);
+        SDL_RenderFillRect(m_renderer, &rect);
+    }
+}
+*/
+
+
 void Game::render()
 {
 

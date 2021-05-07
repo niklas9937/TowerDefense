@@ -40,6 +40,7 @@ private:
 	SDL_Renderer* m_renderer;
 	SDL_Renderer* m_renderer2;
 	int gold = 300;
+	void renderGoblin();
 	
 };
 #endif

@@ -2,7 +2,9 @@
 #ifndef enemy_h
 #define enemy_h
 #include <stdio.h>
+#include "SDL_image.h"
 #include "structs.h"
+#include <string>
 class Enemy
 {
 	
