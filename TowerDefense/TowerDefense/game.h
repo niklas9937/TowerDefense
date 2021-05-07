@@ -38,6 +38,7 @@ private:
 	int width;
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
+	SDL_Renderer* m_renderer2;
 	int gold = 300;
 	
 };

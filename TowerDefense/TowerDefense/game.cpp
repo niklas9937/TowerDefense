@@ -34,7 +34,7 @@ int Game::init(int width, int height) {
         return false;
     }
     m_renderer = SDL_CreateRenderer(m_window, -1, 0);
-    
+    m_renderer2 = SDL_CreateRenderer(m_window, 0, 0);
     loadLevel();
     int k = setEnemy(0, 96, goblin);
     render();
@@ -76,6 +76,9 @@ int Game::init(int width, int height) {
                         {
                             int h = setDefense(x, y, selected, price);
                             gold = gold - price;
+                            SDL_RenderClear(m_renderer);
+                            loadLevel();
+                            SDL_RenderPresent(m_renderer);
                         }
                         
                         render();
@@ -227,11 +230,11 @@ void Game::loadLevel()
             }
             SDL_Rect sdlRect = { (i * 32), (j * 32), 32, 32 };
             SDL_RenderFillRect(m_renderer, &sdlRect);
-            SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 0xff);
+            SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
         }
     }
 
-    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 0xff);
+    SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
 
     // Türme zum Auswählen
 
@@ -283,7 +286,7 @@ void Game::loadLevel()
 void Game::render()
 {
 
-    //SDL_RenderClear(m_renderer);
+    SDL_RenderClear(m_renderer2);
 
     // Türme auf dem Spielfeld laden
 
@@ -345,7 +348,7 @@ void Game::render()
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
 
-            SDL_RenderPresent(m_renderer);
+            SDL_RenderPresent(m_renderer2);
             goEnemy(i);
         }
     }
@@ -370,8 +373,9 @@ void Game::render()
     SDL_Rect Message_rect = { 350,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
     SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
 
-
+    //SDL_RenderPresent(m_renderer2);
     SDL_RenderPresent(m_renderer);
+    
     SDL_FreeSurface(surfaceMessage);
     SDL_DestroyTexture(Message);
 }
