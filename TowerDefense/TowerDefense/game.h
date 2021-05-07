@@ -8,6 +8,7 @@
 #include "defense.h"
 #include "enemy.h"
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 
 #define xField 25
 #define yField 20
