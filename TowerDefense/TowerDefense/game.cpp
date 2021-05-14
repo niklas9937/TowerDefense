@@ -46,9 +46,9 @@ int Game::init(int width, int height) {
     loadField();
     //loadLevel();
     int k = setEnemy(0, 96, goblin);
-    k = setEnemy(0, 96, goblin_knite);
-    k = setEnemy(0, 320, goblin_knite);
-    k = setEnemy(0, 448, goblin_knite);
+    k = setEnemy(0, 96, goblin);
+    k = setEnemy(0, 320, goblin);
+    k = setEnemy(0, 448, goblin);
     render();
 
 
@@ -58,7 +58,7 @@ int Game::init(int width, int height) {
     SDL_Event e;
     int xMouse, yMouse;
     int xwindow, ywindow;
-    AffinityType selected = nothing;
+    AffinityType selected = AffinityType::nothing;
     while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
@@ -80,7 +80,7 @@ int Game::init(int width, int height) {
 
                 if (x < xField && y < yField)
                 {
-                    if (field[x][y] == gras && selected != nothing)
+                    if (field[x][y] == gras && selected != AffinityType::nothing)
                     {
 
                         int price = selected * 10;
@@ -108,7 +108,7 @@ int Game::init(int width, int height) {
             }
             if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_RIGHT)
             {
-                selected = nothing;
+                selected = AffinityType::nothing;
             }
         }
         SDL_RenderClear(m_renderer);
@@ -540,33 +540,91 @@ void Game::goEnemy(int index)
     float hilfe2 = yC / 32;
     yC = int(hilfe2);
 
+    if(gegner.getDestination() == nowhere || gegner.getStepsLeft() == 0 && gegner.getDestination() != nowhere)
+    {
+        if (field[xC + 1][yC] == weg) // nach rechts
+        {
+            enemyArray[index].setDestination(Destination::right);
+            enemyArray[index].setSteps((int) (32 / gegner.getHaste()));
 
+            Point p;
+            p.x = gegner.getXPosi() + gegner.getHaste();
+            p.y = gegner.getYPosi();
+            enemyArray[index].setPosi(p);
+
+
+            enemyArray[index].setSteps(enemyArray[index].getStepsLeft() - 1);
+        }
+        else if (field[xC][yC + 1] == weg) // nach unten
+        {
+            enemyArray[index].setDestination(Destination::bottom);
+            enemyArray[index].setSteps((int)(32 / gegner.getHaste()));
+
+            Point p;
+            p.x = gegner.getXPosi();
+            p.y = gegner.getYPosi() + gegner.getHaste();
+            enemyArray[index].setPosi(p);
+
+
+            enemyArray[index].setSteps(enemyArray[index].getStepsLeft() - 1);
+        }
+        else if (field[xC][yC - 1] == weg) // nach oben
+        {
+            enemyArray[index].setDestination(Destination::top);
+            enemyArray[index].setSteps((int)(32 / gegner.getHaste()));
+
+            Point p;
+            p.x = gegner.getXPosi();
+            p.y = gegner.getYPosi() - gegner.getHaste();
+            enemyArray[index].setPosi(p);
+
+
+            enemyArray[index].setSteps(enemyArray[index].getStepsLeft() - 1);
+        }
+        else if (field[xC + 1][yC] == burg || field[xC][yC + 1] == burg || field[xC][yC - 1] == burg)
+        {
+
+        }
+    }
+    else
+    {
+        Destination akt_destgegner = gegner.getDestination();
+
+        if (akt_destgegner == Destination::right) // nach rechts
+        {
+            Point p;
+            p.x = gegner.getXPosi() + gegner.getHaste();
+            p.y = gegner.getYPosi();
+            enemyArray[index].setPosi(p);
+        }
+        else if (akt_destgegner == Destination::bottom) // nach unten
+        {
+            Point p;
+            p.x = gegner.getXPosi();
+            p.y = gegner.getYPosi() + gegner.getHaste();
+            enemyArray[index].setPosi(p);
+        }
+        else if (akt_destgegner == Destination::top) // nach oben
+        {
+            Point p;
+            p.x = gegner.getXPosi();
+            p.y = gegner.getYPosi() - gegner.getHaste();
+            enemyArray[index].setPosi(p);
+        }
+        else
+        {
+
+        }
+
+        enemyArray[index].setSteps(enemyArray[index].getStepsLeft() - 1);
+        if (enemyArray[index].getStepsLeft() < 1)
+        {
+            enemyArray[index].setSteps(0);
+        }
+    }
 
    
-    if (field[xC + 1][yC] == weg) // nach rechts
-    {
-        Point p;
-        p.x = gegner.getXPosi()+gegner.getHaste();
-        p.y = gegner.getYPosi();
-        enemyArray[index].setPosi(p);
-    }
-    else if (field[xC][yC+1] == weg) // nach unten
-    {
-        Point p;
-        p.x = gegner.getXPosi();
-        p.y = gegner.getYPosi()+ gegner.getHaste();
-        enemyArray[index].setPosi(p);
-    } else if (field[xC][yC - 1] == weg) // nach oben
-    {
-        Point p;
-        p.x = gegner.getXPosi();
-        p.y = gegner.getYPosi() - gegner.getHaste();
-        enemyArray[index].setPosi(p);
-    }
-    else if (field[xC + 1][yC] == burg || field[xC][yC + 1] == burg || field[xC][yC - 1] == burg)
-    {
-
-    }
+    
 
 }
 

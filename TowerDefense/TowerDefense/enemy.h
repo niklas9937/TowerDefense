@@ -17,7 +17,16 @@ public:
 	void setPosi(Point pos);
 	void setHaste(int haste);
 	int getHaste();
+
+
+	void setDestination(Destination newDest) { dest = newDest; }
+	void setSteps(int steps) { stepsLeft = steps; }
+	
+	Destination getDestination() { return dest; }
+	int getStepsLeft() { return stepsLeft; }
 private:
+	Destination dest;
+	int stepsLeft = 0;
 	Point posi;
 	EnemyType racename;
 	int healthPoints;
