@@ -17,6 +17,8 @@ public:
 	void setPosi(Point pos);
 	void setHaste(int haste);
 	int getHaste();
+	void damage(int);
+	int getHealthPoints();
 private:
 	Point posi;
 	EnemyType racename;

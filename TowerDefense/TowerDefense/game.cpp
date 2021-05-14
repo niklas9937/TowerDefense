@@ -50,7 +50,7 @@ int Game::init(int width, int height) {
     k = setEnemy(0, 320, goblin_knite);
     k = setEnemy(0, 448, goblin_knite);
     render();
-
+    
 
     
 
@@ -116,7 +116,6 @@ int Game::init(int width, int height) {
         m_background = loadTexture("Hintergrund.bmp");
         render();
         SDL_RenderPresent(m_renderer);
-
 
 
     }
@@ -341,6 +340,34 @@ void Game::renderGoblin(int index)
     SDL_DestroyTexture(goblin_texture);
 }
 
+void Game::renderAttack(int index)
+{
+    Enemy akt = enemyArray[index];
+    SDL_Texture* goblin_texture = nullptr;
+    auto surface = IMG_Load("goblinOhneHintergrund.png");
+    if (!surface)
+    {
+        std::cerr << "Failed to create surface.\n";
+    }
+    goblin_texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+    if (!goblin_texture)
+    {
+        std::cerr << "failed to create texture.\n";
+    }
+    // Das hier drüber muss später in eine eigene Methode und goblin:texture muss ein Datenfeld sein.        
+
+
+    SDL_Rect rect = { akt.getXPosi(), akt.getYPosi(), 32, 32 }; //posi {X, Y, breite, höhe}
+    if (goblin_texture)
+    {
+        SDL_RenderCopy(m_renderer, goblin_texture, nullptr, &rect);
+    }
+    else {
+        //SDL_SetRenderDrawColor(m_renderer, 0, 0xff, 0xff, 0xff);
+        SDL_RenderFillRect(m_renderer, &rect);
+    }
+    SDL_DestroyTexture(goblin_texture);
+}
 
 
 void Game::render()
@@ -427,7 +454,7 @@ void Game::render()
             SDL_FreeSurface(image);
             SDL_DestroyTexture(texture);
 
-           
+            isInside(i);
         }
     }
     //SDL_RenderPresent(m_renderer);
@@ -437,8 +464,9 @@ void Game::render()
     SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
     for (int i = 0; i < n; i++)
     {
-        if (enemyArray[i].getType() != notEnemy)
+        if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() >0)
         {
+            
             /*
             SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
 
@@ -573,6 +601,35 @@ void Game::goEnemy(int index)
 void Game::loop() {
 
 }
+
+void Game::isInside(int indexDefense)
+{
+    // Compare radius of circle with distance
+    // of its center from given point
+    int xTower = (towerArray[indexDefense].getXPosi() *32) +16;
+    int yTower = (towerArray[indexDefense].getYPosi() *32) + 16;
+    int rad = towerArray[indexDefense].getRange();
+
+    int n = size(enemyArray);
+
+    for (int i = 0; i < n; i++)
+    {
+        if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() >0)
+        {
+            int x = enemyArray[i].getXPosi();
+            int y = enemyArray[i].getYPosi();
+            if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+            {//Im radius == schießen
+                std::cout << "Getroffen";
+                enemyArray[i].damage(towerArray[indexDefense].getDamage());
+            }
+            
+        }
+    }
+
+    
+}
+
 
 
 SDL_Texture* Game::loadTexture(std::string path)
