@@ -36,3 +36,19 @@ Ein Studienkollege hat uns dabei geholfen und wir haben ein komplett neues proje
 **30.04.2021**
 Wir haben die Oberfläche erstellt. Wir können jetzt Wege malen und Türme an eine bestimmte Stelle setzen. Für die Türme haben wir kleine Bilder gemalt und zum Einbinden haben wir die Funktion "mage = SDL_LoadBMP("small.bmp");" genutzt. Wir haben nur keine Ahnung ob es einen Unterschied macht, ob man eine bmp Datei einbindet oder eine jpg. Wir haben es als bmp gelassen, weil es funktioniert, aber vielleicht ändern wir es noch. Keine Ahnung. Es ist auf jedenfall ein gutes Gefühl, dass es jetzt erstmal läuft.
 
+**06.05.2021**
+Wir haben in der letzten Woche die Türme erfolgreich platziert. Wir wollen uns nun auf die Gegner fokussieren.
+Wir schauen uns dazu mehrere Tutorials an um eine Idee zu bekommen wie wie die Gegner am besten über das Spielfeld leiten.
+Wie haben es mit bmp geschafft, den Gegner über das Feld zu leiten. Jedoch haben wir das Problem, dass die felder über die der Gegner läuft die Hintergrundfarbe des Gegner-Images annimmt. 
+Wir nehmen an, dass das Problem gelöst werden kann indem wir ein Bild nehmen welches keinen Hintergrund hat, dazu müssen wir jedoch von bmp auf png umsteigen.
+Dafür binden wir die Bibliothek SDL_image ein mit der soll es möglich sein png's einzufügen.
+Uns ist es noch nicht gelungen ein png einzufügen.
+
+**07.05.2021**
+Wir haben weiter vertsucht den Gegner als png einzubinden aber weiterhing kein Erfolg.
+Uns ist beim Testen ein schwerwiegender Fehler aufgefallen, wenn wir wärend der Gegner läuft einen Turm setzen wollen, aktuallisiert die Oberfläche nicht wie gewünscht.
+Nach ein Paar modifikationen im Code haben wir das Problem aber gelöst und widmen uns wieder dem Gegner.
+Wir gucken uns weitere Tutorials an um einen neue Herrangehensweise zu finden. Wir haben eine gefunden die nach unserem Verständniss funktionieren sollte.
+Wir haben angefangen diese Herrangehensweise zu implementieren.
+
+**14.05.2021**
