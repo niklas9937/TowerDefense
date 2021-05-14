@@ -50,5 +50,6 @@ Uns ist beim Testen ein schwerwiegender Fehler aufgefallen, wenn wir wärend der
 Nach ein Paar modifikationen im Code haben wir das Problem aber gelöst und widmen uns wieder dem Gegner.
 Wir gucken uns weitere Tutorials an um einen neue Herrangehensweise zu finden. Wir haben eine gefunden die nach unserem Verständniss funktionieren sollte.
 Wir haben angefangen diese Herrangehensweise zu implementieren.
+![Game](Unbenannt.JPG)
 
 **14.05.2021**
