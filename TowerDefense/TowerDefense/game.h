@@ -31,6 +31,8 @@ public:
 	void goEnemy(int index);
 	void loadField();
 	SDL_Texture* loadTexture(std::string path);
+	void isInside(int);
+
 private:
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;

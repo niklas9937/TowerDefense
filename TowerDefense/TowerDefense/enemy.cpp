@@ -7,6 +7,7 @@ Enemy::Enemy(EnemyType race, Point coords)
 {
 	Enemy::posi = coords;
 	Enemy::racename = race;
+	Enemy::healthPoints = 100;
 	
 }
 
@@ -40,3 +41,12 @@ int Enemy::getHaste()
 	return haste;
 }
 
+void Enemy::damage(int d)
+{
+	healthPoints = healthPoints - d;
+}
+
+int Enemy::getHealthPoints()
+{
+	return healthPoints;
+}

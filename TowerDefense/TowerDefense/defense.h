@@ -14,11 +14,14 @@ public:
 	int getYPosi();
 	AffinityType getAffinity();
 	int getPrice();
+	int getRange();
+	int getDamage();
 private:
 	AffinityType affinity;
-	int range;
+	int range = 70;
 	Point posi;
 	int price;
+	int damage ;
 };
 
 #endif 

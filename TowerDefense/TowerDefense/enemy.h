@@ -19,11 +19,16 @@ public:
 	int getHaste();
 
 
+
 	void setDestination(Destination newDest) { dest = newDest; }
 	void setSteps(int steps) { stepsLeft = steps; }
 	
 	Destination getDestination() { return dest; }
 	int getStepsLeft() { return stepsLeft; }
+
+	void damage(int);
+	int getHealthPoints();
+
 private:
 	Destination dest;
 	int stepsLeft = 0;
