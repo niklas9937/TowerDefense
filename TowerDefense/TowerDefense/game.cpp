@@ -40,7 +40,7 @@ int Game::init(int width, int height) {
 
     if (m_background == NULL )
     {
-        printf("Failed to a load background texture image!\n");
+        printf("Failed to load background texture image!\n");
     }
 
     loadField();
@@ -49,7 +49,7 @@ int Game::init(int width, int height) {
     k = setEnemy(0, 96, goblin);
     k = setEnemy(0, 320, goblin);
     k = setEnemy(0, 448, goblin);
-    render();
+    //render();
     
 
     
@@ -93,7 +93,7 @@ int Game::init(int width, int height) {
                             //SDL_RenderPresent(m_renderer);
                         }
                         
-                        render();
+                        //render();
                     }
                 }
                 else
@@ -128,6 +128,8 @@ void Game::cleanup()
 {
 
     SDL_DestroyWindow(m_window);
+    SDL_DestroyRenderer(m_renderer);
+    
     // finish
     SDL_Quit();
     TTF_Quit();
@@ -338,36 +340,39 @@ void Game::renderGoblin(int index)
         SDL_RenderFillRect(m_renderer, &rect);
     }
     SDL_DestroyTexture(goblin_texture);
+    SDL_FreeSurface(surface);
 }
 
 void Game::renderAttack(int index)
 {
-    Enemy akt = enemyArray[index];
-    SDL_Texture* goblin_texture = nullptr;
-    auto surface = IMG_Load("goblinOhneHintergrund.png");
+    Attack akt = attackArray[index];
+    SDL_Texture* texture = nullptr;
+    auto surface = IMG_Load("Ball.png");
     if (!surface)
     {
         std::cerr << "Failed to create surface.\n";
     }
-    goblin_texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-    if (!goblin_texture)
+    texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+    if (!texture)
     {
         std::cerr << "failed to create texture.\n";
     }
     // Das hier drüber muss später in eine eigene Methode und goblin:texture muss ein Datenfeld sein.        
 
 
-    SDL_Rect rect = { akt.getXPosi(), akt.getYPosi(), 32, 32 }; //posi {X, Y, breite, höhe}
-    if (goblin_texture)
+    SDL_Rect rect = { akt.getPosi().x, akt.getPosi().y, 10, 10 }; //posi {X, Y, breite, höhe}
+    if (texture)
     {
-        SDL_RenderCopy(m_renderer, goblin_texture, nullptr, &rect);
+        SDL_RenderCopy(m_renderer, texture, nullptr, &rect);
     }
     else {
         //SDL_SetRenderDrawColor(m_renderer, 0, 0xff, 0xff, 0xff);
         SDL_RenderFillRect(m_renderer, &rect);
     }
-    SDL_DestroyTexture(goblin_texture);
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
 }
+
 
 
 void Game::render()
@@ -414,6 +419,7 @@ void Game::render()
             //SDL_RenderPresent(m_renderer);
             SDL_FreeSurface(image);
             SDL_DestroyTexture(texture);
+
             indexBild += 1;
         }
     }
@@ -495,7 +501,16 @@ void Game::render()
 
 
 
- 
+    //Attacken auf dem Spielfeld laden
+
+    n = size(attackArray);
+
+    for (int i = 0; i < n; i++)
+    {
+        renderAttack(i);
+        attackArray[i].fly();
+    }
+
 
     // Gold anzeigen
 
@@ -514,16 +529,31 @@ void Game::render()
     SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
 
     SDL_UpdateWindowSurface(m_window);
-    //SDL_RenderPresent(m_renderer2);
-    //SDL_RenderPresent(m_renderer);
     
     SDL_FreeSurface(surfaceMessage);
     SDL_DestroyTexture(Message);
+    TTF_CloseFont(Sans);
 }
 
 
 
+int Game::setAttack(int indexTower, int indexEnemy)
+{
+    Point pDest;
+    pDest.x = enemyArray[indexEnemy].getXPosi()+16;
+    pDest.y = enemyArray[indexEnemy].getYPosi()+16;
 
+    Point pPosi;
+    pPosi.x = (towerArray[indexTower].getXPosi() *32) +16;
+    pPosi.y = (towerArray[indexTower].getYPosi() *32) +16;
+    
+    Attack attack(pDest,pPosi);
+
+    attackArray[indexAttackArray] = attack;
+    indexAttackArray += 1;
+
+    return 0;
+}
 
 
 int Game::setDefense(int xC, int yC, AffinityType type,int price) {
@@ -679,6 +709,7 @@ void Game::isInside(int indexDefense)
             if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
             {//Im radius == schießen
                 std::cout << "Getroffen";
+                setAttack(indexDefense,i);
                 enemyArray[i].damage(towerArray[indexDefense].getDamage());
             }
             

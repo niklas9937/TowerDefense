@@ -11,11 +11,13 @@ class Attack
 public:
 	Attack();
 	Attack(Point,Point);
-	void fly();
+	bool fly();
+	Point getPosi();
 
 private:
 	Point posi;		
 	Point destination;
+	Point formel;
 };
 
 #endif#pragma once

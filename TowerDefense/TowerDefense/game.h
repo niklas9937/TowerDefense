@@ -7,6 +7,7 @@
 #include "structs.h"
 #include "defense.h"
 #include "enemy.h"
+#include "attack.h"
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 
@@ -14,6 +15,7 @@
 #define yField 20
 #define MaxTower 20
 #define MaxEnemy 60
+#define MaxAttack 100
 class Game
 {
 	enum Terrain { gras, weg, burg };
@@ -32,12 +34,16 @@ public:
 	void loadField();
 	SDL_Texture* loadTexture(std::string path);
 	void isInside(int);
+	int setAttack(int indexTower, int indexEnemy);
+	void renderAttack(int index);
 
 private:
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;
+	int indexAttackArray = 0;
     Defense towerArray[MaxTower];
 	Enemy enemyArray[MaxEnemy];
+	Attack attackArray[MaxAttack];
 	int height;
 	int width;
 	SDL_Window* m_window;
