@@ -284,9 +284,10 @@ void Game::loadLevel()
 }
 
 
-/*
-void Game::renderGoblin()
+
+void Game::renderGoblin(int index)
 {
+    Enemy akt = enemyArray[index];
     SDL_Texture* goblin_texture = nullptr;
     auto surface = IMG_Load("goblin.png");
     if (!surface)
@@ -301,17 +302,17 @@ void Game::renderGoblin()
     // Das hier drüber muss später in eine eigene Methode und goblin:texture muss ein Datenfeld sein.        
     
     
-    SDL_Rect rect = { 0xff, 0xff, 32, 32 }; //posi {X, Y, breite, höhe}
+    SDL_Rect rect = { akt.getXPosi(), akt.getYPosi(), 32, 32 }; //posi {X, Y, breite, höhe}
     if (goblin_texture)
     {
         SDL_RenderCopy(m_renderer, goblin_texture, nullptr, &rect);
     }
     else {
-        SDL_SetRenderDrawColor(m_renderer, 0xff, 0xff, 0xff, 0xff);
+        SDL_SetRenderDrawColor(m_renderer, 0, 0xff, 0xff, 0xff);
         SDL_RenderFillRect(m_renderer, &rect);
     }
 }
-*/
+
 
 
 void Game::render()
@@ -363,6 +364,7 @@ void Game::render()
     {
         if (enemyArray[i].getType() != notEnemy)
         {
+            /*
             SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
 
             SDL_Rect sdlRect = { (enemyArray[i].getXPosi()), (enemyArray[i].getYPosi()), 32, 32 };
@@ -380,6 +382,10 @@ void Game::render()
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
 
             SDL_RenderPresent(m_renderer2);
+            */
+
+            renderGoblin(i);
+
             goEnemy(i);
         }
     }
