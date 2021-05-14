@@ -29,6 +29,8 @@ public:
 	void render();
 	void loadLevel();
 	void goEnemy(int index);
+	void loadField();
+	SDL_Texture* loadTexture(std::string path);
 private:
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;
@@ -39,6 +41,7 @@ private:
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
 	SDL_Renderer* m_renderer2;
+	SDL_Texture* m_background;
 	int gold = 300;
 	void renderGoblin(int);
 	

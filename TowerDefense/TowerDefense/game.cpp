@@ -35,8 +35,20 @@ int Game::init(int width, int height) {
     }
     m_renderer = SDL_CreateRenderer(m_window, -1, 0);
     m_renderer2 = SDL_CreateRenderer(m_window, 0, 0);
-    loadLevel();
+    m_background = NULL;
+    m_background = loadTexture("Hintergrund.bmp");
+
+    if (m_background == NULL )
+    {
+        printf("Failed to a load background texture image!\n");
+    }
+
+    loadField();
+    //loadLevel();
     int k = setEnemy(0, 96, goblin);
+    k = setEnemy(0, 96, goblin_knite);
+    k = setEnemy(0, 320, goblin_knite);
+    k = setEnemy(0, 448, goblin_knite);
     render();
 
 
@@ -76,9 +88,9 @@ int Game::init(int width, int height) {
                         {
                             int h = setDefense(x, y, selected, price);
                             gold = gold - price;
-                            SDL_RenderClear(m_renderer);
-                            loadLevel();
-                            SDL_RenderPresent(m_renderer);
+                            //SDL_RenderClear(m_renderer);
+                            //loadLevel();
+                            //SDL_RenderPresent(m_renderer);
                         }
                         
                         render();
@@ -99,7 +111,14 @@ int Game::init(int width, int height) {
                 selected = nothing;
             }
         }
+        SDL_RenderClear(m_renderer);
+        //loadLevel();
+        m_background = loadTexture("Hintergrund.bmp");
         render();
+        SDL_RenderPresent(m_renderer);
+
+
+
     }
     
     cleanup();
@@ -118,12 +137,8 @@ void Game::cleanup()
 
 }
 
-
-void Game::loadLevel()
+void Game::loadField()
 {
-    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
-    SDL_RenderClear(m_renderer);
-    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
 
     field[0][3] = weg;
     field[1][3] = weg;
@@ -217,6 +232,16 @@ void Game::loadLevel()
     field[21][11] = weg;
 
     field[21][10] = burg;
+}
+
+
+void Game::loadLevel()
+{
+    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
+    SDL_RenderClear(m_renderer);
+    
+    SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+
     for (int i = 0; i < xField; i++)
     {
         for (int j = 0; j < yField; j++)
@@ -274,6 +299,8 @@ void Game::loadLevel()
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
             SDL_RenderPresent(m_renderer);
+            SDL_FreeSurface(image);
+            SDL_DestroyTexture(texture);
             indexBild += 1;
         }
     }
@@ -289,7 +316,7 @@ void Game::renderGoblin(int index)
 {
     Enemy akt = enemyArray[index];
     SDL_Texture* goblin_texture = nullptr;
-    auto surface = IMG_Load("goblin.png");
+    auto surface = IMG_Load("goblinOhneHintergrund.png");
     if (!surface)
     {
         std::cerr << "Failed to create surface.\n";
@@ -308,27 +335,74 @@ void Game::renderGoblin(int index)
         SDL_RenderCopy(m_renderer, goblin_texture, nullptr, &rect);
     }
     else {
-        SDL_SetRenderDrawColor(m_renderer, 0, 0xff, 0xff, 0xff);
+        //SDL_SetRenderDrawColor(m_renderer, 0, 0xff, 0xff, 0xff);
         SDL_RenderFillRect(m_renderer, &rect);
     }
+    SDL_DestroyTexture(goblin_texture);
 }
 
 
 
 void Game::render()
 {
+    SDL_RenderCopy(m_renderer, m_background, NULL, NULL);
+    //SDL_RenderClear(m_renderer);
+    // Türme zum Auswählen
 
-    SDL_RenderClear(m_renderer2);
+    towers[0][0] = small;
+    towers[1][0] = medium;
+    towers[2][0] = large;
+    towers[0][1] = fire;
+    towers[1][1] = water;
+    towers[2][1] = wind;
+    towers[0][2] = lightning;
+    towers[1][2] = plant;
+    towers[2][2] = toxic;
+
+    int hX = 21;
+    int hY = 21;
+    int indexBild = 1;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            SDL_Rect sdlRect = { ((hX + j) * 32), ((hY + i) * 32), 32, 32 };
+            SDL_RenderDrawRect(m_renderer, &sdlRect);
+            SDL_Surface* image = SDL_LoadBMP("small.bmp");
+            switch (indexBild)
+            {
+            case 1: image = SDL_LoadBMP("small.bmp"); break;
+            case 2: image = SDL_LoadBMP("medium.bmp"); break;
+            case 3: image = SDL_LoadBMP("large.bmp"); break;
+            case 4: image = SDL_LoadBMP("fire.bmp"); break;
+            case 5: image = SDL_LoadBMP("water.bmp"); break;
+            case 6: image = SDL_LoadBMP("wind.bmp"); break;
+            case 7: image = SDL_LoadBMP("lightning.bmp"); break;
+            case 8: image = SDL_LoadBMP("plant.bmp"); break;
+            case 9: image = SDL_LoadBMP("toxic.bmp"); break;
+            }
+
+            SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
+            SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
+            //SDL_RenderPresent(m_renderer);
+            SDL_FreeSurface(image);
+            SDL_DestroyTexture(texture);
+            indexBild += 1;
+        }
+    }
+
+    //SDL_RenderPresent(m_renderer);
+    //SDL_SetRenderDrawColor(m_renderer, 0xff, 0xff, 0xff, 0xff);
 
     // Türme auf dem Spielfeld laden
-
+   
     int n = size(towerArray);
 
     for (int i = 0; i < n; i++)
     {
         if (towerArray[i].getAffinity()!= nothing)
         {
-            SDL_SetRenderDrawColor(m_renderer, 100, 100, 100, 0xff);
+            //SDL_SetRenderDrawColor(m_renderer, 100, 100, 100, 0xff);
 
             SDL_Rect sdlRect = { (towerArray[i].getXPosi() * 32), (towerArray[i].getYPosi() * 32), 32, 32 };
             //SDL_RenderFillRect(m_renderer, &sdlRect);
@@ -350,12 +424,13 @@ void Game::render()
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
 
+            SDL_FreeSurface(image);
+            SDL_DestroyTexture(texture);
 
-
-            SDL_RenderPresent(m_renderer);
+           
         }
     }
-
+    //SDL_RenderPresent(m_renderer);
     // Gegner auf dem Spielfeld laden
     n = size(enemyArray);
 
@@ -410,8 +485,9 @@ void Game::render()
     SDL_Rect Message_rect = { 350,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
     SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
 
+    SDL_UpdateWindowSurface(m_window);
     //SDL_RenderPresent(m_renderer2);
-    SDL_RenderPresent(m_renderer);
+    //SDL_RenderPresent(m_renderer);
     
     SDL_FreeSurface(surfaceMessage);
     SDL_DestroyTexture(Message);
@@ -442,6 +518,7 @@ int Game::setEnemy(int xC, int yC, EnemyType type)
     p.y = yC;
 
     Enemy enemy(type, p);
+    enemy.setHaste(type);
     enemyArray[indexEnemyArray] = enemy;
     indexEnemyArray += 1;
 
@@ -456,16 +533,20 @@ void Game::goEnemy(int index)
     int xC = gegner.getXPosi();
     int yC = gegner.getYPosi();
 
+
     float hilfe1 = xC / 32;
     xC = int(hilfe1);
 
     float hilfe2 = yC / 32;
     yC = int(hilfe2);
 
+
+
+   
     if (field[xC + 1][yC] == weg) // nach rechts
     {
         Point p;
-        p.x = gegner.getXPosi()+1;
+        p.x = gegner.getXPosi()+gegner.getHaste();
         p.y = gegner.getYPosi();
         enemyArray[index].setPosi(p);
     }
@@ -473,14 +554,13 @@ void Game::goEnemy(int index)
     {
         Point p;
         p.x = gegner.getXPosi();
-        p.y = gegner.getYPosi()+1;
+        p.y = gegner.getYPosi()+ gegner.getHaste();
         enemyArray[index].setPosi(p);
-    }
-    else if (field[xC][yC - 1] == weg) // nach oben
+    } else if (field[xC][yC - 1] == weg) // nach oben
     {
         Point p;
         p.x = gegner.getXPosi();
-        p.y = gegner.getYPosi() -1;
+        p.y = gegner.getYPosi() - gegner.getHaste();
         enemyArray[index].setPosi(p);
     }
     else if (field[xC + 1][yC] == burg || field[xC][yC + 1] == burg || field[xC][yC - 1] == burg)
@@ -492,4 +572,32 @@ void Game::goEnemy(int index)
 
 void Game::loop() {
 
+}
+
+
+SDL_Texture* Game::loadTexture(std::string path)
+{
+    //The final texture
+    SDL_Texture* newTexture = NULL;
+
+    //Load image at specified path
+    SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+    if (loadedSurface == NULL)
+    {
+        printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+    }
+    else
+    {
+        //Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
+        if (newTexture == NULL)
+        {
+            printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+        }
+
+        //Get rid of old loaded surface
+        SDL_FreeSurface(loadedSurface);
+    }
+
+    return newTexture;
 }

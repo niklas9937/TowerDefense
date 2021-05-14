@@ -30,3 +30,13 @@ void Enemy::setPosi(Point pos)
 	Enemy::posi = pos;
 }
 
+void Enemy::setHaste(int haste)
+{
+	Enemy::haste = haste;
+}
+
+int Enemy::getHaste()
+{
+	return haste;
+}
+
