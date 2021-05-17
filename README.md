@@ -53,3 +53,8 @@ Wir haben angefangen diese Herrangehensweise zu implementieren.
 ![Game](Unbenannt.JPG)
 
 **14.05.2021**
+Heute haben wir das Problem mit dem Flackernden Bild gelöst. Wir waren so dumm und haben überall alles neu gerendert. Das haben wir entfernt und es funktioniert jetzt schön gleichmäßig. Unser andreres Problem mit dem Speicherplatz konnten wir leider nicht lösen, wir haben alle möglichen Texture, Surfaces und die Bibliotheken gefreet, aber unser Programm stürzt immer noch nach 30 sekunden ab. Wir haben keinen Ahnung mehr, woran es liegen könnte. 
+
+Beim letzten Mal hatten wir den Golums die Bewegung gegeben, und heute haben wir es mit mehreren Golums auf verschiedenen Wege ausprobiert. Leider ist uns dabeiaufgefallen, dass die Golums nicht nach oben laufen können. Nach rechts und nach unten funktioniert es, nur nicht nach oben. Wenn er nach oben laufen soll, bleibt er an einer Stelle stehen. Wir haben an irgendeiner Stelle ein Denkfehler, aber bis jetzt noch nicht gelöst. Aber die Golums können mit Unterschiedlichen Geschwindigkeiten laufen und das ist cool. Aber das die Golums nicht nach oben laufen können, müssen wir unbedingt noch lösen.
+
+Die Türme können seit heute im Umkreis eines bestimmten Radius  Golums erkennnen und auf sie schießen. Wir prüfen bei jedem Schleifendurchlauf ob ein Golum im Umkreis ist, wenn dies geschieht, nehmen wir diese Position und schießen Kugeln auf den Golum. Der Turm bringt dadurch den Golum um.  Es fühlt sich langsam an, wie ein kleines echtes Spiel.
