@@ -21,7 +21,7 @@ private:
 	int range = 70;
 	Point posi;
 	int price;
-	int damage ;
+	int damage;
 };
 
 #endif 
