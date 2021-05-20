@@ -663,7 +663,7 @@ void Game::goEnemy(int index)
         }
         else if (field[xC + 1][yC] == burg || field[xC][yC + 1] == burg || field[xC][yC - 1] == burg)
         {
-
+            //Spiel Beenden
         }
     }
     else
