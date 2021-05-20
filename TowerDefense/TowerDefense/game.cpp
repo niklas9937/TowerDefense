@@ -514,10 +514,13 @@ void Game::render()
 
    
 
-    for (int i = 0; i < MaxAttack  == true; i++)
+    for (int i = 0; i < MaxAttack ; i++)
     {
-        renderAttack(i);
-        attackArray[i].fly();
+        if (attackArray[i].isInitialized == true)
+        {
+            renderAttack(i);
+            attackArray[i].fly();
+        }
     }
     
 
@@ -560,7 +563,7 @@ int Game::setAttack(int indexTower, int indexEnemy)
     bool weiter = true;
     for (int i = 0; weiter == true  and i < MaxAttack; i++)
     {
-        if (attackArray[i].isInitialized = false)
+        if (attackArray[i].isInitialized == false)
         {
             attackArray[i] = attack;
             weiter = false;
