@@ -113,7 +113,7 @@ int Game::init(int width, int height) {
         }
         SDL_RenderClear(m_renderer);
         //loadLevel();
-        m_background = loadTexture("Hintergrund.bmp");
+        //m_background = loadTexture("Hintergrund.bmp");
         render();
         SDL_RenderPresent(m_renderer);
 
@@ -283,7 +283,7 @@ void Game::loadLevel()
         {
             SDL_Rect sdlRect = { ((hX + j) * 32), ((hY + i) * 32), 32, 32 };
             SDL_RenderDrawRect(m_renderer, &sdlRect);
-            SDL_Surface* image = SDL_LoadBMP("small.bmp");
+            SDL_Surface* image = NULL; // SDL_LoadBMP("small.bmp");
             switch (indexBild)
             {
             case 1: image = SDL_LoadBMP("small.bmp"); break;
@@ -400,7 +400,7 @@ void Game::render()
         {
             SDL_Rect sdlRect = { ((hX + j) * 32), ((hY + i) * 32), 32, 32 };
             SDL_RenderDrawRect(m_renderer, &sdlRect);
-            SDL_Surface* image = SDL_LoadBMP("small.bmp");
+            SDL_Surface* image = NULL; // SDL_LoadBMP("small.bmp");
             switch (indexBild)
             {
             case 1: image = SDL_LoadBMP("small.bmp"); break;
@@ -440,7 +440,7 @@ void Game::render()
             SDL_Rect sdlRect = { (towerArray[i].getXPosi() * 32), (towerArray[i].getYPosi() * 32), 32, 32 };
             //SDL_RenderFillRect(m_renderer, &sdlRect);
 
-            SDL_Surface* image = SDL_LoadBMP("small.bmp");
+            SDL_Surface* image = NULL; // SDL_LoadBMP("small.bmp");
             switch (towerArray[i].getAffinity())
             {
             case 1: image = SDL_LoadBMP("small.bmp"); break;
