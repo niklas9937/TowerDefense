@@ -41,9 +41,7 @@ private:
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;
 	int indexAttackArray = 0;
-    Defense towerArray[MaxTower];
-	Enemy enemyArray[MaxEnemy];
-	Attack attackArray[MaxAttack];
+    
 	int height;
 	int width;
 	SDL_Window* m_window;
@@ -52,6 +50,9 @@ private:
 	SDL_Texture* m_background;
 	int gold = 300;
 	void renderGoblin(int);
+	Defense towerArray[MaxTower];
+	Enemy enemyArray[MaxEnemy];
+	Attack attackArray[MaxAttack];
 	
 };
 #endif

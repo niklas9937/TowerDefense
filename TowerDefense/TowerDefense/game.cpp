@@ -250,6 +250,7 @@ void Game::loadLevel()
             Terrain hilf = field[i][j];
             switch (hilf)
             {
+            default:
             case weg: SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);  break;
             case gras: SDL_SetRenderDrawColor(m_renderer, 0, 153, 0, 255); break;
             case burg: SDL_SetRenderDrawColor(m_renderer, 131, 139, 139, 255);  break;
@@ -286,6 +287,7 @@ void Game::loadLevel()
             SDL_Surface* image = NULL; // SDL_LoadBMP("small.bmp");
             switch (indexBild)
             {
+            default:
             case 1: image = SDL_LoadBMP("small.bmp"); break;
             case 2: image = SDL_LoadBMP("medium.bmp"); break;
             case 3: image = SDL_LoadBMP("large.bmp"); break;
@@ -403,6 +405,7 @@ void Game::render()
             SDL_Surface* image = NULL; // SDL_LoadBMP("small.bmp");
             switch (indexBild)
             {
+            default:
             case 1: image = SDL_LoadBMP("small.bmp"); break;
             case 2: image = SDL_LoadBMP("medium.bmp"); break;
             case 3: image = SDL_LoadBMP("large.bmp"); break;
@@ -443,6 +446,7 @@ void Game::render()
             SDL_Surface* image = NULL; // SDL_LoadBMP("small.bmp");
             switch (towerArray[i].getAffinity())
             {
+            default:
             case 1: image = SDL_LoadBMP("small.bmp"); break;
             case 2: image = SDL_LoadBMP("medium.bmp"); break;
             case 3: image = SDL_LoadBMP("large.bmp"); break;
@@ -453,7 +457,7 @@ void Game::render()
             case 8: image = SDL_LoadBMP("plant.bmp"); break;
             case 9: image = SDL_LoadBMP("toxic.bmp"); break;
             }
-
+            
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
 
@@ -468,6 +472,7 @@ void Game::render()
     n = size(enemyArray);
 
     SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
+    std::cout << "Wir sind hier" << std::endl;
     for (int i = 0; i < n; i++)
     {
         if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() >0)
@@ -497,6 +502,10 @@ void Game::render()
 
             goEnemy(i);
         }
+        else
+        {
+            std::cout << i << std::endl;
+        }
     }
 
 
@@ -510,7 +519,7 @@ void Game::render()
         renderAttack(i);
         attackArray[i].fly();
     }
-
+    
 
     // Gold anzeigen
 
@@ -694,7 +703,7 @@ void Game::isInside(int indexDefense)
 {
     // Compare radius of circle with distance
     // of its center from given point
-    int xTower = (towerArray[indexDefense].getXPosi() *32) +16;
+    int xTower = (towerArray[indexDefense].getXPosi() *32) + 16;
     int yTower = (towerArray[indexDefense].getYPosi() *32) + 16;
     int rad = towerArray[indexDefense].getRange();
 
