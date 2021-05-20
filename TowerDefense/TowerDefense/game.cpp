@@ -406,15 +406,15 @@ void Game::render()
             switch (indexBild)
             {
             default:
-            case 1: image = SDL_LoadBMP("small.bmp"); break;
-            case 2: image = SDL_LoadBMP("medium.bmp"); break;
-            case 3: image = SDL_LoadBMP("large.bmp"); break;
-            case 4: image = SDL_LoadBMP("fire.bmp"); break;
-            case 5: image = SDL_LoadBMP("water.bmp"); break;
-            case 6: image = SDL_LoadBMP("wind.bmp"); break;
-            case 7: image = SDL_LoadBMP("lightning.bmp"); break;
-            case 8: image = SDL_LoadBMP("plant.bmp"); break;
-            case 9: image = SDL_LoadBMP("toxic.bmp"); break;
+            case 1: image = IMG_Load("small.png"); break;
+            case 2: image = IMG_Load("medium.png"); break;
+            case 3: image = IMG_Load("large.png"); break;
+            case 4: image = IMG_Load("fire.png"); break;
+            case 5: image = IMG_Load("water.png"); break;
+            case 6: image = IMG_Load("wind.png"); break;
+            case 7: image = IMG_Load("lightning.png"); break;
+            case 8: image = IMG_Load("plant.png"); break;
+            case 9: image = IMG_Load("toxic.png"); break;
             }
 
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
@@ -447,15 +447,15 @@ void Game::render()
             switch (towerArray[i].getAffinity())
             {
             default:
-            case 1: image = SDL_LoadBMP("small.bmp"); break;
-            case 2: image = SDL_LoadBMP("medium.bmp"); break;
-            case 3: image = SDL_LoadBMP("large.bmp"); break;
-            case 4: image = SDL_LoadBMP("fire.bmp"); break;
-            case 5: image = SDL_LoadBMP("water.bmp"); break;
-            case 6: image = SDL_LoadBMP("wind.bmp"); break;
-            case 7: image = SDL_LoadBMP("lightning.bmp"); break;
-            case 8: image = SDL_LoadBMP("plant.bmp"); break;
-            case 9: image = SDL_LoadBMP("toxic.bmp"); break;
+            case 1: image = IMG_Load("small.png"); break;
+            case 2: image = IMG_Load("medium.png"); break;
+            case 3: image = IMG_Load("large.png"); break;
+            case 4: image = IMG_Load("fire.png"); break;
+            case 5: image = IMG_Load("water.png"); break;
+            case 6: image = IMG_Load("wind.png"); break;
+            case 7: image = IMG_Load("lightning.png"); break;
+            case 8: image = IMG_Load("plant.png"); break;
+            case 9: image = IMG_Load("toxic.png"); break;
             }
             
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
