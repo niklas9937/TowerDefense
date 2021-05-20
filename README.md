@@ -59,3 +59,12 @@ Beim letzten Mal hatten wir den Golums die Bewegung gegeben, und heute haben wir
 
 Die Türme können seit heute im Umkreis eines bestimmten Radius  Golums erkennnen und auf sie schießen. Wir prüfen bei jedem Schleifendurchlauf ob ein Golum im Umkreis ist, wenn dies geschieht, nehmen wir diese Position und schießen Kugeln auf den Golum. Der Turm bringt dadurch den Golum um.  Es fühlt sich langsam an, wie ein kleines echtes Spiel.
 ![Game](TuermeSchießen.JPG)
+
+
+**20.05.2021**
+Heute haben wir mit viel Hilfe unser Problem des Datenspeichers gelöst bekommen. 
+Dadurch konnten wir auch andere Speicherprobleme wir z.B. mit den Attacken schnell lösen. Bei den Attacken hatten wir das gleiche Problem, dass unser Array zu voll war. 
+Wir konnten den Türmen einen Kreis hinzufügen, dass heißt der Spieler kann jetzt nachvollziehen, in welchem Bereich der Turm auf die Gegner schießt. Dann haben wir auch einen Teil des Endes eingebaut und zwar das Verlieren des Spieles. Das Gewinnen dauert noch ein bisschen, aktuell müssen wir uns noch entscheiden, wann der Spieler gewonnen hat, wie schnell die Gegner sein sollen, welchen Radius die Türme haben, welchen Schaden sie machen können und vieles mehr. Aktuell haben wir für alles grobe Werte, die wir zum Ende hin noch verfeinern müssen. 
+
+Genauso wie wir die Gegner per Random aufs Spielfeld setzen, zu random Zeiten. Leider sind wir uns unsicher, ob wir es per Random lassen oder einen vordefinierten Programmablauf machen wollen. Da sind wir uns aktuell uneinig. Leider ist uns durch das Random aufgefallen, dass die Gegner mit unterschiedlichen Geschwindigkeiten wieder die falschen Wege nehmen. Das ist ziemlich doof, vorallem nachdem wir dachten wir hätten es fertig. Aber leider Pech gehabt.
+
