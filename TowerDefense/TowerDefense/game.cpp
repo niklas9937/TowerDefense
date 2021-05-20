@@ -621,7 +621,8 @@ void Game::goEnemy(int index)
 
     if(gegner.getDestination() == nowhere || gegner.getStepsLeft() == 0 && gegner.getDestination() != nowhere)
     {
-        if (field[xC + 1][yC] == weg) // nach rechts
+
+        if (field[xC + 1][yC] == weg && gegner.getDestination() != Destination::left) // nach rechts
         {
             enemyArray[index].setDestination(Destination::right);
             enemyArray[index].setSteps((int) (32 / gegner.getHaste()));
@@ -634,7 +635,7 @@ void Game::goEnemy(int index)
 
             enemyArray[index].setSteps(enemyArray[index].getStepsLeft() - 1);
         }
-        else if (field[xC][yC + 1] == weg) // nach unten
+        else if (field[xC][yC + 1] == weg && gegner.getDestination() != Destination::top) // nach unten
         {
             enemyArray[index].setDestination(Destination::bottom);
             enemyArray[index].setSteps((int)(32 / gegner.getHaste()));
@@ -647,7 +648,7 @@ void Game::goEnemy(int index)
 
             enemyArray[index].setSteps(enemyArray[index].getStepsLeft() - 1);
         }
-        else if (field[xC][yC - 1] == weg) // nach oben
+        else if (field[xC][yC - 1] == weg && gegner.getDestination() != Destination::bottom) // nach oben
         {
             enemyArray[index].setDestination(Destination::top);
             enemyArray[index].setSteps((int)(32 / gegner.getHaste()));
