@@ -28,7 +28,7 @@ public:
 
 	void damage(int);
 	int getHealthPoints();
-
+	int getReward();
 private:
 	Destination dest;
 	int stepsLeft = 0;
@@ -37,6 +37,7 @@ private:
 	int healthPoints;
 	int maxHealthPoints;
 	int haste;				//geschwindigkeit
+	int reward;
 };
 
 #endif

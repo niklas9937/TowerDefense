@@ -20,7 +20,11 @@ Attack::Attack(Point dest, Point posi)
 bool Attack::fly()
 {
 	//neuen Punkt berechnen
-	
+	if (5 > std::abs(destination.x - posi.x) and 5 > std::abs(destination.y - posi.y))
+	{
+		isInitialized = false;
+		return true;
+	}
 	if (destination.x == posi.x && destination.y == posi.y)
 	{
 		isInitialized = false;

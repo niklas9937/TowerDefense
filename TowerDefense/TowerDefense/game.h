@@ -16,8 +16,8 @@
 #define xField 25
 #define yField 20
 #define MaxTower 20	
-#define MaxEnemy 60
-#define MaxAttack 100
+#define MaxEnemy 50
+#define MaxAttack 70
 class Game
 {
 	enum Terrain { gras, weg, burg };
@@ -40,14 +40,16 @@ public:
 	void renderAttack(int index);
 	int getRandom(int grenze);
 	void setNewRandomEnemy();
+	void DrawCircle(SDL_Renderer* renderer, int32_t centreX, int32_t centreY, int32_t radius);
 private:
+	bool verloren = false;
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;
 	int indexAttackArray = 0;
 	Point startWeg1; 
 	Point startWeg2;
 	Point startWeg3;
-
+	int hilfe = 30;
 	int height;
 	int width;
 	SDL_Window* m_window;

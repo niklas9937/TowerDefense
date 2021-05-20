@@ -8,7 +8,7 @@ Enemy::Enemy(EnemyType race, Point coords)
 	Enemy::posi = coords;
 	Enemy::racename = race;
 	Enemy::healthPoints = 100;
-	
+	Enemy::reward = race;
 }
 
 int Enemy::getType()
@@ -16,6 +16,10 @@ int Enemy::getType()
 	return racename;
 }
 
+int Enemy::getReward()
+{
+	return reward;
+}
 
 int Enemy::getXPosi()
 {

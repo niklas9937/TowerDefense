@@ -111,12 +111,38 @@ int Game::init(int width, int height) {
                 selected = AffinityType::nothing;
             }
         }
-        SDL_RenderClear(m_renderer);
-        //loadLevel();
-        //m_background = loadTexture("Hintergrund.bmp");
-        render();
-        SDL_RenderPresent(m_renderer);
+        if (verloren == false)
+        {
+            SDL_RenderClear(m_renderer);
+            //loadLevel();
+            //m_background = loadTexture("Hintergrund.bmp");
+            render();
+            SDL_RenderPresent(m_renderer);
+        }
+        else
+        {
+            TTF_Font* Sans = TTF_OpenFont("arial.ttf", 60);
+            SDL_Color Red = { 139, 0, 0 };
 
+            std::ostringstream oss;
+            oss << "You Lost " ;
+            std::string var = oss.str();
+
+
+
+            SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), Red);
+            SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
+            SDL_Rect Message_rect = { 250,350,surfaceMessage->w,surfaceMessage->h }; //create a rect
+            SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
+
+            SDL_UpdateWindowSurface(m_window);
+
+            SDL_FreeSurface(surfaceMessage);
+            SDL_DestroyTexture(Message);
+            TTF_CloseFont(Sans);
+
+            SDL_RenderPresent(m_renderer);
+        }
 
     }
     
@@ -466,6 +492,7 @@ void Game::render()
             case 9: image = IMG_Load("toxic.png"); break;
             }
             
+            DrawCircle(m_renderer,towerArray[i].getXPosi()*32+16, towerArray[i].getYPosi()*32+16, towerArray[i].getRange()/2);
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
 
@@ -478,8 +505,15 @@ void Game::render()
     //SDL_RenderPresent(m_renderer);
     // Gegner auf dem Spielfeld laden
     n = size(enemyArray);
-
-    setNewRandomEnemy();
+    if (hilfe > 0)
+    {
+        hilfe = hilfe-1;
+    }
+    else
+    {
+        setNewRandomEnemy();
+        hilfe = 30;
+    }
 
     SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
     std::cout << "Wir sind hier" << std::endl;
@@ -487,33 +521,8 @@ void Game::render()
     {
         if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() >0)
         {
-            
-            /*
-            SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
-
-            SDL_Rect sdlRect = { (enemyArray[i].getXPosi()), (enemyArray[i].getYPosi()), 32, 32 };
-            //SDL_RenderFillRect(m_renderer, &sdlRect);
-
-            SDL_Surface* image = SDL_LoadBMP("goblin.bmp");
-            switch (enemyArray[i].getType())
-            {
-            case 1: image = SDL_LoadBMP("goblin.bmp"); break;
-            case 2: image = SDL_LoadBMP("medium.bmp"); break;
-            case 3: image = SDL_LoadBMP("large.bmp"); break;
-            }
-            //SDL_Texture* texture = IMG_LoadTexture(m_renderer, "Unbenannt.png");
-            SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
-            SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
-
-            SDL_RenderPresent(m_renderer2);
-            */
-            
             renderGoblin(i);
             goEnemy(i);
-        }
-        else
-        {
-            std::cout << i << std::endl;
         }
     }
 
@@ -579,8 +588,6 @@ int Game::setAttack(int indexTower, int indexEnemy)
         }
     }
 
-    
-    //indexAttackArray += 1;
 
     return 0;
 }
@@ -618,8 +625,6 @@ int Game::setEnemy(int xC, int yC, EnemyType type)
             weiter = false;
         }
     }
-    //enemyArray[indexEnemyArray] = enemy;
-    //indexEnemyArray += 1;
 
 
     return 0;
@@ -669,7 +674,8 @@ void Game::goEnemy(int index)
     float hilfe2 = yC / 32;
     yC = int(hilfe2);
 
-    if(gegner.getDestination() == nowhere || gegner.getStepsLeft() == 0 && gegner.getDestination() != nowhere)
+
+     if(gegner.getDestination() == nowhere || gegner.getStepsLeft() == 0 && gegner.getDestination() != nowhere)
     {
 
         if (field[xC + 1][yC] == weg && gegner.getDestination() != Destination::left) // nach rechts
@@ -714,6 +720,7 @@ void Game::goEnemy(int index)
         else if (field[xC + 1][yC] == burg || field[xC][yC + 1] == burg || field[xC][yC - 1] == burg)
         {
             //Spiel Beenden
+            verloren = true;
         }
     }
     else
@@ -780,9 +787,12 @@ void Game::isInside(int indexDefense)
             int y = enemyArray[i].getYPosi();
             if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
             {//Im radius == schießen
-                std::cout << "Getroffen";
                 setAttack(indexDefense,i);
                 enemyArray[i].damage(towerArray[indexDefense].getDamage());
+                if (enemyArray[i].getHealthPoints() <= 0)
+                {
+                    gold = gold + (enemyArray[i].getReward() * 5);
+                }
             }
             
         }
@@ -795,21 +805,22 @@ int Game::getRandom(int grenze)
 {
 
     unsigned long j;
-    srand((unsigned)time(NULL));
+    srand(time(NULL));
 
 
     int n;
+    n = rand() % grenze;
+    /*for (j = 0; j < 30; ++j)
+    {
+        
+        while ((n = rand()) > RAND_MAX - (RAND_MAX - 50) % grenze)
+        { }
 
-    /* skip rand() readings that would make n%6 non-uniformly distributed
-      (assuming rand() itself is uniformly distributed from 0 to RAND_MAX) */
-    while ((n = rand()) > RAND_MAX - (RAND_MAX - 50) % grenze)
-    { /* bad value retrieved so get next one */
-    }
+        //printf("%d,\t%d\n", n, n % 6 + 1);
+        }
+        */
 
-    //printf("%d,\t%d\n", n, n % 6 + 1);
-
-
-    return (n % grenze);
+    return n;//(n % grenze);
 }
 
 
@@ -839,4 +850,42 @@ SDL_Texture* Game::loadTexture(std::string path)
     }
 
     return newTexture;
+}
+
+void Game::DrawCircle(SDL_Renderer* renderer, int32_t centreX, int32_t centreY, int32_t radius)
+{
+    const int32_t diameter = (radius * 2);
+
+    int32_t x = (radius - 1);
+    int32_t y = 0;
+    int32_t tx = 1;
+    int32_t ty = 1;
+    int32_t error = (tx - diameter);
+    SDL_SetRenderDrawColor(m_renderer, 139, 0, 0, 255);
+    while (x >= y)
+    {
+        //  Each of the following renders an octant of the circle
+        SDL_RenderDrawPoint(renderer, centreX + x, centreY - y);
+        SDL_RenderDrawPoint(renderer, centreX + x, centreY + y);
+        SDL_RenderDrawPoint(renderer, centreX - x, centreY - y);
+        SDL_RenderDrawPoint(renderer, centreX - x, centreY + y);
+        SDL_RenderDrawPoint(renderer, centreX + y, centreY - x);
+        SDL_RenderDrawPoint(renderer, centreX + y, centreY + x);
+        SDL_RenderDrawPoint(renderer, centreX - y, centreY - x);
+        SDL_RenderDrawPoint(renderer, centreX - y, centreY + x);
+
+        if (error <= 0)
+        {
+            ++y;
+            error += ty;
+            ty += 2;
+        }
+
+        if (error > 0)
+        {
+            --x;
+            tx += 2;
+            error += (tx - diameter);
+        }
+    }
 }
