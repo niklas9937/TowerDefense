@@ -64,6 +64,53 @@ int Game::init(int width, int height) {
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
+            if (e.type == SDL_MOUSEMOTION) {
+            
+                SDL_GetGlobalMouseState(&xMouse, &yMouse);
+                SDL_GetWindowPosition(m_window, &xwindow, &ywindow);
+                xMouse = xMouse - xwindow;
+                yMouse = yMouse - ywindow;
+                std::cout << xMouse << " " << yMouse << std::endl;
+                xMouse = xMouse / 32;
+                int x = (int)xMouse;
+                yMouse = yMouse / 32;
+                int y = (int)yMouse;
+
+                
+
+                //tower[x][y]
+                if (x >= 21 && y >= 21)
+                {
+                    x = x - 21;
+                    y = y - 21;
+                    std::cout << towers[x][y];
+                    SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
+                    
+
+                    TTF_Font* Sans = TTF_OpenFont("arial.ttf", 20);
+                    SDL_Color Red = { 139, 0, 0 };
+
+                    std::ostringstream oss;
+                    oss << "Damage"<<towers[x][y];
+                    std::string var = oss.str();
+
+
+
+                    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), Red);
+                    SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
+                    SDL_Rect Message_rect = { 550,550,surfaceMessage->w,surfaceMessage->h }; //create a rect
+                    SDL_RenderFillRect(m_renderer, &Message_rect);
+                    SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
+
+                    SDL_UpdateWindowSurface(m_window);
+
+                    SDL_FreeSurface(surfaceMessage);
+                    SDL_DestroyTexture(Message);
+                    TTF_CloseFont(Sans);
+
+                    SDL_RenderPresent(m_renderer);
+                }
+            }
             if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
 
                 SDL_GetGlobalMouseState(&xMouse, &yMouse);
@@ -516,7 +563,7 @@ void Game::render()
     }
 
     SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
-    std::cout << "Wir sind hier" << std::endl;
+    //std::cout << "Wir sind hier" << std::endl;
     for (int i = 0; i < n; i++)
     {
         if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() >0)
