@@ -15,7 +15,7 @@
 #define yField 20
 #define MaxTower 20	
 #define MaxEnemy 60
-#define MaxAttack 100
+#define MaxAttack 1000
 class Game
 {
 	enum Terrain { gras, weg, burg };

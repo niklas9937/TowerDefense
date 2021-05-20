@@ -15,13 +15,15 @@ Attack::Attack(Point dest, Point posi)
 	p.x = int(xC*0.2);
 	p.y = int(yC*0.2);
 	Attack::formel = p;
+	isInitialized = true;
 }
 bool Attack::fly()
 {
 	//neuen Punkt berechnen
-
+	
 	if (destination.x == posi.x && destination.y == posi.y)
 	{
+		isInitialized = false;
 		return true;
 	}
 	else
@@ -31,6 +33,8 @@ bool Attack::fly()
 		return false;
 	}
 }
+
+
 
 Point Attack::getPosi()
 {

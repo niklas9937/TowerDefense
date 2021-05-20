@@ -512,9 +512,9 @@ void Game::render()
 
     //Attacken auf dem Spielfeld laden
 
-    n = size(attackArray);
+   
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < MaxAttack  == true; i++)
     {
         renderAttack(i);
         attackArray[i].fly();
@@ -557,9 +557,18 @@ int Game::setAttack(int indexTower, int indexEnemy)
     pPosi.y = (towerArray[indexTower].getYPosi() *32) +16;
     
     Attack attack(pDest,pPosi);
+    bool weiter = true;
+    for (int i = 0; weiter == true  and i < MaxAttack; i++)
+    {
+        if (attackArray[i].isInitialized = false)
+        {
+            attackArray[i] = attack;
+            weiter = false;
+        }
+    }
 
-    attackArray[indexAttackArray] = attack;
-    indexAttackArray += 1;
+    
+    //indexAttackArray += 1;
 
     return 0;
 }

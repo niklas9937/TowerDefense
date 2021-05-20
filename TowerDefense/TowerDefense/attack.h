@@ -13,6 +13,7 @@ public:
 	Attack(Point,Point);
 	bool fly();
 	Point getPosi();
+	bool isInitialized;
 
 private:
 	Point posi;		
