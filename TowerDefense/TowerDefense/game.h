@@ -11,6 +11,8 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 
+#include <time.h>
+
 #define xField 25
 #define yField 20
 #define MaxTower 20	
@@ -36,12 +38,16 @@ public:
 	void isInside(int);
 	int setAttack(int indexTower, int indexEnemy);
 	void renderAttack(int index);
-
+	int getRandom(int grenze);
+	void setNewRandomEnemy();
 private:
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;
 	int indexAttackArray = 0;
-    
+	Point startWeg1; 
+	Point startWeg2;
+	Point startWeg3;
+
 	int height;
 	int width;
 	SDL_Window* m_window;

@@ -45,10 +45,10 @@ int Game::init(int width, int height) {
 
     loadField();
     //loadLevel();
-    int k = setEnemy(0, 96, goblin);
-    k = setEnemy(0, 96, goblin);
-    k = setEnemy(0, 320, goblin);
-    k = setEnemy(0, 448, goblin);
+    //int k = setEnemy(0, 96, goblin);
+    //k = setEnemy(0, 96, goblin);
+    //k = setEnemy(0, 320, goblin);
+    //k = setEnemy(0, 448, goblin);
     //render();
     
 
@@ -140,6 +140,14 @@ void Game::cleanup()
 
 void Game::loadField()
 {
+    startWeg1.x = 0;
+    startWeg1.y = 96;
+
+    startWeg2.x = 0;
+    startWeg2.y = 320;
+
+    startWeg3.x = 0;
+    startWeg3.y = 448 ; 
 
     field[0][3] = weg;
     field[1][3] = weg;
@@ -471,6 +479,8 @@ void Game::render()
     // Gegner auf dem Spielfeld laden
     n = size(enemyArray);
 
+    setNewRandomEnemy();
+
     SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
     std::cout << "Wir sind hier" << std::endl;
     for (int i = 0; i < n; i++)
@@ -497,9 +507,8 @@ void Game::render()
 
             SDL_RenderPresent(m_renderer2);
             */
-
+            
             renderGoblin(i);
-
             goEnemy(i);
         }
         else
@@ -598,12 +607,53 @@ int Game::setEnemy(int xC, int yC, EnemyType type)
 
     Enemy enemy(type, p);
     enemy.setHaste(type);
-    enemyArray[indexEnemyArray] = enemy;
-    indexEnemyArray += 1;
+
+
+    bool weiter = true;
+    for (int i = 0; weiter == true and i < MaxEnemy; i++)
+    {
+        if (enemyArray[i].getType() == notEnemy)
+        {
+            enemyArray[i] = enemy;
+            weiter = false;
+        }
+    }
+    //enemyArray[indexEnemyArray] = enemy;
+    //indexEnemyArray += 1;
 
 
     return 0;
 }
+
+void Game::setNewRandomEnemy()
+{
+    int randomEnemy = getRandom(10);
+    int randomWeg = getRandom(3);
+
+    EnemyType type = notEnemy;
+
+    switch(randomEnemy)
+    {
+        case 0: type = notEnemy ; break;
+        case 1: type = goblin; break;
+        case 2: type = goblin_knite; break;
+        case 3: type = slim_goblin; break;
+        default: type = notEnemy; break;
+    }
+
+    if (type != notEnemy)
+    {
+        switch (randomWeg)
+        {
+            default:
+            case 0: setEnemy(startWeg1.x, startWeg1.y, type); break;
+            case 1: setEnemy(startWeg2.x, startWeg2.y, type); break;
+            case 2: setEnemy(startWeg3.x, startWeg3.y, type); break;
+        }
+    }
+}
+
+
 
 void Game::goEnemy(int index)
 {
@@ -739,6 +789,27 @@ void Game::isInside(int indexDefense)
     }
 
     
+}
+
+int Game::getRandom(int grenze)
+{
+
+    unsigned long j;
+    srand((unsigned)time(NULL));
+
+
+    int n;
+
+    /* skip rand() readings that would make n%6 non-uniformly distributed
+      (assuming rand() itself is uniformly distributed from 0 to RAND_MAX) */
+    while ((n = rand()) > RAND_MAX - (RAND_MAX - 50) % grenze)
+    { /* bad value retrieved so get next one */
+    }
+
+    //printf("%d,\t%d\n", n, n % 6 + 1);
+
+
+    return (n % grenze);
 }
 
 

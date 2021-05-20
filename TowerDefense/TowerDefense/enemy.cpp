@@ -44,6 +44,10 @@ int Enemy::getHaste()
 void Enemy::damage(int d)
 {
 	healthPoints = healthPoints - d;
+	if (healthPoints <= 0)
+	{
+		racename = notEnemy;
+	}
 }
 
 int Enemy::getHealthPoints()
