@@ -68,3 +68,12 @@ Wir konnten den Türmen einen Kreis hinzufügen, dass heißt der Spieler kann je
 
 Genauso wie wir die Gegner per Random aufs Spielfeld setzen, zu random Zeiten. Leider sind wir uns unsicher, ob wir es per Random lassen oder einen vordefinierten Programmablauf machen wollen. Da sind wir uns aktuell uneinig. Leider ist uns durch das Random aufgefallen, dass die Gegner mit unterschiedlichen Geschwindigkeiten wieder die falschen Wege nehmen. Das ist ziemlich doof, vorallem nachdem wir dachten wir hätten es fertig. Aber leider Pech gehabt.
 
+
+**10.06.2021**
+Wir haben heute einige Bugs gefixed. Zum einen hatten wirden Bug, dass manche Goblins aufgrund ihrer Laufgeschwindigkeit den vorgegebenen Pfad verlassen haben. Durch einige Tests haben wir den Fehler gefunden. Die berechnung des Weges kommt nicht mit Geschwindigkeiten klar, welche 32 nicht gerade teilen können. Wir haben also die Goblin Geschwindigkeit so angepasst das sie immer durch 32 Teilbar ist.
+
+Wir haben, wo wir schon einmal dabei waren, den Enemy-Konstruktor so angepasst das er auch im fertigen Spiel so genutzt werden kann. Die neuen Gegner-Stats müssen jedoch noch gebalaced werden, da die Türme noch mit den Test-Stats opperieren.
+
+Wir haben die Darstellung der Reichweite nun so angepasst, dass die Kreise um die Türem jetzt auch die richtigen Reichweiten wiederspiegeln. Türme greifen nun auch nur noch ein Ziel an, anstatt allen um umkreis Schaden zuzufügen.
+
+Wir wollen demnächst die Geschwindigkeit des Spieles unabhängig vom System des Spielers machen. Das heißt, das wir irgendwie den Loop so einstellen müssen, dass er nicht schneller ist wenn der PC besser ist. Bei dieser Aufgabe wollen wir und nächste Woche in der Fragestunde hilfe hohlen.
