@@ -660,7 +660,7 @@ int Game::setEnemy(int xC, int yC, EnemyType type)
     p.y = yC;
 
     Enemy enemy(type, p);
-    enemy.setHaste(type);
+    
 
 
     bool weiter = true;
@@ -704,6 +704,8 @@ void Game::setNewRandomEnemy()
         }
     }
 }
+
+
 
 
 
