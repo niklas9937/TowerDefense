@@ -539,7 +539,7 @@ void Game::render()
             case 9: image = IMG_Load("toxic.png"); break;
             }
             
-            DrawCircle(m_renderer,towerArray[i].getXPosi()*32+16, towerArray[i].getYPosi()*32+16, towerArray[i].getRange()/2);
+            DrawCircle(m_renderer,towerArray[i].getXPosi()*32+16, towerArray[i].getYPosi()*32+16, towerArray[i].getRange());
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
 
