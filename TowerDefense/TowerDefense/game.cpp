@@ -91,7 +91,7 @@ int Game::init(int width, int height) {
                     SDL_Color Red = { 139, 0, 0 };
 
                     std::ostringstream oss;
-                    oss << "Damage"<<towers[x][y];
+                    oss << "Damage "<<towers[x][y];
                     std::string var = oss.str();
 
 
@@ -546,7 +546,7 @@ void Game::render()
             SDL_FreeSurface(image);
             SDL_DestroyTexture(texture);
 
-            isInside(i);
+            isInside2(i, towerArray[i].getIndexAttackOfEnemy());
         }
     }
     //SDL_RenderPresent(m_renderer);
@@ -825,8 +825,7 @@ void Game::isInside(int indexDefense)
     int rad = towerArray[indexDefense].getRange();
 
     int n = size(enemyArray);
-
-    for (int i = 0; i < n; i++)
+    for (int i = 0;  i < n; i++)
     {
         if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() >0)
         {
@@ -847,6 +846,84 @@ void Game::isInside(int indexDefense)
 
     
 }
+
+void Game::isInside2(int indexDefense, int indexEnemy)
+{
+    int xTower = (towerArray[indexDefense].getXPosi() * 32) + 16;
+    int yTower = (towerArray[indexDefense].getYPosi() * 32) + 16;
+    int rad = towerArray[indexDefense].getRange();
+    if (indexEnemy < size(enemyArray))
+    {
+        if (enemyArray[indexEnemy].getType() != notEnemy && enemyArray[indexEnemy].getHealthPoints() > 0)
+        {
+            int x = enemyArray[indexEnemy].getXPosi();
+            int y = enemyArray[indexEnemy].getYPosi();
+            if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+            {
+                //Im radius == schießen
+                setAttack(indexDefense, indexEnemy);
+                enemyArray[indexEnemy].damage(towerArray[indexDefense].getDamage());
+                if (enemyArray[indexEnemy].getHealthPoints() <= 0)
+                {
+                    gold = gold + (enemyArray[indexEnemy].getReward() * 5);
+                }
+            }
+            else
+            { // Außerhalb des Radius = > neuen Gegner suchen
+                int n = size(enemyArray);
+                bool weiter = true;
+                for (int i = 0; weiter == true && i < n; i++)
+                {
+                    if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
+                    {
+                        int x = enemyArray[i].getXPosi();
+                        int y = enemyArray[i].getYPosi();
+                        if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+                        {//Im radius == schießen
+                            towerArray[indexDefense].setIndexAttackOfEnemy(i);
+                            setAttack(indexDefense, i);
+                            enemyArray[i].damage(towerArray[indexDefense].getDamage());
+                            if (enemyArray[i].getHealthPoints() <= 0)
+                            {
+                                gold = gold + (enemyArray[i].getReward() * 5);
+                            }
+                            weiter = false;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+        else
+        {
+            // Turm hatte keinen Gegner 
+            int n = size(enemyArray);
+            bool weiter = true;
+            for (int i = 0; weiter == true && i < n; i++)
+            {
+                if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
+                {
+                    int x = enemyArray[i].getXPosi();
+                    int y = enemyArray[i].getYPosi();
+                    if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+                    {//Im radius == schießen
+                        towerArray[indexDefense].setIndexAttackOfEnemy (i);
+                        setAttack(indexDefense, i);
+                        enemyArray[i].damage(towerArray[indexDefense].getDamage());
+                        if (enemyArray[i].getHealthPoints() <= 0)
+                        {
+                            gold = gold + (enemyArray[i].getReward() * 5);
+                        }
+                        weiter = false;
+                    }
+                }
+            }
+
+        }
+    
+}
+
 
 int Game::getRandom(int grenze)
 {

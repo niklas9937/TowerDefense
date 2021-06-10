@@ -39,3 +39,13 @@ int Defense::getDamage()
 {
 	return damage;
 }
+
+int Defense::getIndexAttackOfEnemy()
+{
+	return indexAttackOnEnemy;
+}
+
+void Defense::setIndexAttackOfEnemy(int index)
+{
+	indexAttackOnEnemy = index;
+}

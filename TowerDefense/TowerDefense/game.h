@@ -41,6 +41,7 @@ public:
 	int getRandom(int grenze);
 	void setNewRandomEnemy();
 	void DrawCircle(SDL_Renderer* renderer, int32_t centreX, int32_t centreY, int32_t radius);
+	void isInside2(int indexDefense, int indexEnemy);
 private:
 	bool verloren = false;
 	int indexTowerArray = 0;
