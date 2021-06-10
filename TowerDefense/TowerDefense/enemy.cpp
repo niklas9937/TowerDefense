@@ -9,6 +9,16 @@ Enemy::Enemy(EnemyType race, Point coords)
 	Enemy::racename = race;
 	Enemy::healthPoints = 100;
 	Enemy::reward = race;
+
+	switch (race)
+	{
+	default: Enemy::haste = 1;
+		case EnemyType::notEnemy: Enemy::haste = 0;
+		case EnemyType::goblin: Enemy::haste = 2; break;
+		case EnemyType::goblin_knite: Enemy::haste = 1; break;
+		case EnemyType::slim_goblin: Enemy::haste = 4; break;
+	}
+
 }
 
 int Enemy::getType()
