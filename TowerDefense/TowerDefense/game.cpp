@@ -79,7 +79,7 @@ int Game::init(int width, int height) {
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
-            if (e.type == SDL_MOUSEMOTION) {
+            /*if (e.type == SDL_MOUSEMOTION) {
             
                 SDL_GetGlobalMouseState(&xMouse, &yMouse);
                 SDL_GetWindowPosition(m_window, &xwindow, &ywindow);
@@ -125,14 +125,13 @@ int Game::init(int width, int height) {
 
                     SDL_RenderPresent(m_renderer);
                 }
-            }
+            }*/
             if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
 
                 SDL_GetGlobalMouseState(&xMouse, &yMouse);
                 SDL_GetWindowPosition(m_window, &xwindow, &ywindow);
                 xMouse = xMouse - xwindow;
                 yMouse = yMouse - ywindow;
-                std::cout << xMouse << " " << yMouse << std::endl;
                 xMouse = xMouse / 32;
                 int x = (int)xMouse;
                 yMouse = yMouse / 32;
@@ -262,12 +261,12 @@ int Game::init(int width, int height) {
 
             SDL_RenderPresent(m_renderer);
         }
-        //unsigned int endTime = SDL_GetTicks();
-        //unsigned int deltaTime = endTime - startTime;
-        //if (deltaTime < 16)
-        //{
-          //  SDL_Delay(1 - deltaTime);
-        //}
+        unsigned int endTime = SDL_GetTicks();
+        unsigned int deltaTime = endTime - startTime;
+        if (deltaTime < 16)
+        {
+            SDL_Delay(1 - deltaTime);
+        }
     }
     
     cleanup();
