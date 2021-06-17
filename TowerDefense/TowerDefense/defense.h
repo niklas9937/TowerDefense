@@ -20,7 +20,7 @@ public:
 	void setIndexAttackOfEnemy(int index);
 private:
 	AffinityType affinity;
-	int range = 70;
+	int range;
 	Point posi;
 	int price;
 	int damage;
