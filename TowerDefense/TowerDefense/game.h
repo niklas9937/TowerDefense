@@ -62,5 +62,6 @@ private:
 	Attack attackArray[MaxAttack];
 	Level1 level1;
 	int liveEnemy = 0;
+	bool gewonnen = false;
 };
 #endif

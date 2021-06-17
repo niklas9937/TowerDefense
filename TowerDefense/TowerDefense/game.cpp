@@ -193,30 +193,13 @@ int Game::init(int width, int height) {
             if (liveEnemy == 0 && level1.welle3.size() == 0)
             {
                 level1.fertig = true;
-                TTF_Font* Sans = TTF_OpenFont("arial.ttf", 60);
-                SDL_Color Red = { 139, 0, 0 };
-
-                std::ostringstream oss;
-                oss << "You Win ";
-                std::string var = oss.str();
-
-
-
-                SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), Red);
-                SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
-                SDL_Rect Message_rect = { 250,350,surfaceMessage->w,surfaceMessage->h }; //create a rect
-                SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
-
-                SDL_UpdateWindowSurface(m_window);
-
-                SDL_FreeSurface(surfaceMessage);
-                SDL_DestroyTexture(Message);
-                TTF_CloseFont(Sans);
-
-                SDL_RenderPresent(m_renderer);
+                gewonnen = true;
             }
         }
-        if (verloren == false)
+        
+
+
+        if (gewonnen == false && verloren == false)
         {
             SDL_RenderClear(m_renderer);
             //loadLevel();
@@ -231,7 +214,7 @@ int Game::init(int width, int height) {
             render();
             SDL_RenderPresent(m_renderer);
         }
-        else
+        else if (verloren == true)
         {
             TTF_Font* Sans = TTF_OpenFont("arial.ttf", 60);
             SDL_Color Red = { 139, 0, 0 };
@@ -255,11 +238,35 @@ int Game::init(int width, int height) {
 
             SDL_RenderPresent(m_renderer);
         }
+        else if (gewonnen == true)
+        {
+            TTF_Font* Sans = TTF_OpenFont("arial.ttf", 60);
+            SDL_Color Red = { 139, 0, 0 };
+
+            std::ostringstream oss;
+            oss << "You Win ";
+            std::string var = oss.str();
+
+
+
+            SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), Red);
+            SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
+            SDL_Rect Message_rect = { 250,350,surfaceMessage->w,surfaceMessage->h }; //create a rect
+            SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
+
+            SDL_UpdateWindowSurface(m_window);
+
+            SDL_FreeSurface(surfaceMessage);
+            SDL_DestroyTexture(Message);
+            TTF_CloseFont(Sans);
+
+            SDL_RenderPresent(m_renderer);
+        }
         unsigned int endTime = SDL_GetTicks();
         unsigned int deltaTime = endTime - startTime;
-        if (deltaTime < 16)
+        if (deltaTime < 1)
         {
-            SDL_Delay(16 - deltaTime);
+            SDL_Delay(1 - deltaTime);
         }
     }
     
