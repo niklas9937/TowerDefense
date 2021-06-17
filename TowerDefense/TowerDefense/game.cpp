@@ -1026,6 +1026,32 @@ void Game::isInside2(int indexDefense, int indexEnemy)
                     }
                 }
             }
+            else
+            {
+                // Turm hatte keinen Gegner 
+                int n = size(enemyArray);
+                bool weiter = true;
+                for (int i = 0; weiter == true && i < n; i++)
+                {
+                    if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
+                    {
+                        int x = enemyArray[i].getXPosi();
+                        int y = enemyArray[i].getYPosi();
+                        if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+                        {//Im radius == schießen
+                            towerArray[indexDefense].setIndexAttackOfEnemy(i);
+                            setAttack(indexDefense, i);
+                            enemyArray[i].damage(towerArray[indexDefense].getDamage());
+                            if (enemyArray[i].getHealthPoints() <= 0)
+                            {
+                                gold = gold + (enemyArray[i].getReward());
+                            }
+                            weiter = false;
+                        }
+                    }
+                }
+            
+            }
         }
         else
         {
@@ -1051,7 +1077,6 @@ void Game::isInside2(int indexDefense, int indexEnemy)
                     }
                 }
             }
-
         }
     }
 }
