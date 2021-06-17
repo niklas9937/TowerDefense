@@ -145,7 +145,22 @@ int Game::init(int width, int height) {
                     if (field[x][y] == gras && selected != AffinityType::nothing)
                     {
 
-                        int price = selected * 10;
+                        int price = 0;
+                        switch (selected)
+                            {
+                            default: price = 0;
+                            case AffinityType::small: price = 40;; break;
+                            case AffinityType::medium: price = 90; break;
+                            case AffinityType::large: price = 140;; break;
+                            case AffinityType::fire: price = 190;; break;
+                            case AffinityType::lightning: price = 240; break;
+                            case AffinityType::plant: price = 190; break;
+                            case AffinityType::toxic: price = 190; break;
+                            case AffinityType::water: price = 190; break;
+                            case AffinityType::wind: price = 190; break;
+                            case AffinityType::nothing: price = 0; break;
+                            }
+
                         if (gold - price > 0)
                         {
                             int h = setDefense(x, y, selected, price);
@@ -911,7 +926,7 @@ void Game::isInside(int indexDefense)
                 enemyArray[i].damage(towerArray[indexDefense].getDamage());
                 if (enemyArray[i].getHealthPoints() <= 0)
                 {
-                    gold = gold + (enemyArray[i].getReward() * 5);
+                    gold = gold + (enemyArray[i].getReward());
                 }
             }
             
@@ -926,49 +941,86 @@ void Game::isInside2(int indexDefense, int indexEnemy)
     int xTower = (towerArray[indexDefense].getXPosi() * 32) + 16;
     int yTower = (towerArray[indexDefense].getYPosi() * 32) + 16;
     int rad = towerArray[indexDefense].getRange();
-    if (indexEnemy < size(enemyArray))
+    AffinityType aff = towerArray[indexDefense].getAffinity();
+    if (aff == AffinityType::plant)
     {
-        if (enemyArray[indexEnemy].getType() != notEnemy && enemyArray[indexEnemy].getHealthPoints() > 0)
+        
+        int n = size(enemyArray);
+        for (int i = 0; i < n; i++)
         {
-            int x = enemyArray[indexEnemy].getXPosi();
-            int y = enemyArray[indexEnemy].getYPosi();
-            if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+            if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
             {
-                //Im radius == schieﬂen
-                setAttack(indexDefense, indexEnemy);
-                enemyArray[indexEnemy].damage(towerArray[indexDefense].getDamage());
-                if (enemyArray[indexEnemy].getHealthPoints() <= 0)
-                {
-                    gold = gold + (enemyArray[indexEnemy].getReward() * 5);
-                }
-            }
-            else
-            { // Auﬂerhalb des Radius = > neuen Gegner suchen
-                int n = size(enemyArray);
-                bool weiter = true;
-                for (int i = 0; weiter == true && i < n; i++)
-                {
-                    if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
+                int x = enemyArray[i].getXPosi();
+                int y = enemyArray[i].getYPosi();
+                if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+                {//Im radius == schieﬂen
+                    setAttack(indexDefense, i);
+                    
+                    
+                    enemyArray[i].damage(towerArray[indexDefense].getDamage());
+                    if (enemyArray[i].getHealthPoints() <= 0)
                     {
-                        int x = enemyArray[i].getXPosi();
-                        int y = enemyArray[i].getYPosi();
-                        if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
-                        {//Im radius == schieﬂen
-                            towerArray[indexDefense].setIndexAttackOfEnemy(i);
-                            setAttack(indexDefense, i);
-                            enemyArray[i].damage(towerArray[indexDefense].getDamage());
-                            if (enemyArray[i].getHealthPoints() <= 0)
-                            {
-                                gold = gold + (enemyArray[i].getReward() * 5);
+                        gold = gold + (enemyArray[i].getReward());
+                    }
+                }
+
+            }
+        }
+    }
+    else
+    {
+
+
+        if (indexEnemy < size(enemyArray))
+        {
+            if (enemyArray[indexEnemy].getType() != notEnemy && enemyArray[indexEnemy].getHealthPoints() > 0)
+            {
+                int x = enemyArray[indexEnemy].getXPosi();
+                int y = enemyArray[indexEnemy].getYPosi();
+                if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+                {
+                    //Im radius == schieﬂen
+                    setAttack(indexDefense, indexEnemy);
+                    enemyArray[indexEnemy].damage(towerArray[indexDefense].getDamage());
+                    if (aff == AffinityType::lightning)
+                    {
+                        enemyArray[indexEnemy].setHaste(1);
+                    }
+                    if (enemyArray[indexEnemy].getHealthPoints() <= 0)
+                    {
+                        gold = gold + (enemyArray[indexEnemy].getReward());
+                    }
+                }
+                else
+                { // Auﬂerhalb des Radius = > neuen Gegner suchen
+                    int n = size(enemyArray);
+                    bool weiter = true;
+                    for (int i = 0; weiter == true && i < n; i++)
+                    {
+                        if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
+                        {
+                            int x = enemyArray[i].getXPosi();
+                            int y = enemyArray[i].getYPosi();
+                            if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
+                            {//Im radius == schieﬂen
+                                towerArray[indexDefense].setIndexAttackOfEnemy(i);
+                                setAttack(indexDefense, i);
+                                enemyArray[i].damage(towerArray[indexDefense].getDamage());
+                                if (aff == AffinityType::lightning)
+                                {
+                                    enemyArray[indexEnemy].setHaste(1);
+                                }
+                                if (enemyArray[i].getHealthPoints() <= 0)
+                                {
+                                    gold = gold + (enemyArray[i].getReward());
+                                }
+                                weiter = false;
                             }
-                            weiter = false;
                         }
                     }
                 }
             }
-
         }
-    }
         else
         {
             // Turm hatte keinen Gegner 
@@ -982,12 +1034,12 @@ void Game::isInside2(int indexDefense, int indexEnemy)
                     int y = enemyArray[i].getYPosi();
                     if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
                     {//Im radius == schieﬂen
-                        towerArray[indexDefense].setIndexAttackOfEnemy (i);
+                        towerArray[indexDefense].setIndexAttackOfEnemy(i);
                         setAttack(indexDefense, i);
                         enemyArray[i].damage(towerArray[indexDefense].getDamage());
                         if (enemyArray[i].getHealthPoints() <= 0)
                         {
-                            gold = gold + (enemyArray[i].getReward() * 5);
+                            gold = gold + (enemyArray[i].getReward());
                         }
                         weiter = false;
                     }
@@ -995,7 +1047,7 @@ void Game::isInside2(int indexDefense, int indexEnemy)
             }
 
         }
-    
+    }
 }
 
 
