@@ -8,6 +8,7 @@
 #include "defense.h"
 #include "enemy.h"
 #include "attack.h"
+#include "Level1.h"
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 
@@ -20,7 +21,6 @@
 #define MaxAttack 70
 class Game
 {
-	enum Terrain { gras, weg, burg };
 public:
 	Game();
 	int init(int width, int height);
@@ -42,14 +42,12 @@ public:
 	void setNewRandomEnemy();
 	void DrawCircle(SDL_Renderer* renderer, int32_t centreX, int32_t centreY, int32_t radius);
 	void isInside2(int indexDefense, int indexEnemy);
+	bool level(unsigned int );
 private:
 	bool verloren = false;
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;
 	int indexAttackArray = 0;
-	Point startWeg1; 
-	Point startWeg2;
-	Point startWeg3;
 	int hilfe = 30;
 	int height;
 	int width;
@@ -62,6 +60,7 @@ private:
 	Defense towerArray[MaxTower];
 	Enemy enemyArray[MaxEnemy];
 	Attack attackArray[MaxAttack];
-	
+	Level1 level1;
+	int liveEnemy = 0;
 };
 #endif

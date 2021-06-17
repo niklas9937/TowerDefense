@@ -43,13 +43,26 @@ int Game::init(int width, int height) {
         printf("Failed to load background texture image!\n");
     }
 
-    loadField();
+    if (level1.fertig == false)
+    {
+        for (int i = 0; i < xField; i++)
+        {
+            for (int j = 0; j < yField; j++)
+            {
+                field[i][j] = level1.field[i][j];
+            }
+        }
+    }
+
+
+    //loadField();
     //loadLevel();
     //int k = setEnemy(0, 96, goblin);
     //k = setEnemy(0, 96, goblin);
     //k = setEnemy(0, 320, goblin);
     //k = setEnemy(0, 448, goblin);
     //render();
+    
     
 
     
@@ -59,6 +72,7 @@ int Game::init(int width, int height) {
     int xMouse, yMouse;
     int xwindow, ywindow;
     AffinityType selected = AffinityType::nothing;
+    unsigned int lastEnemy = SDL_GetTicks();
     while (!quit) {
         unsigned int startTime = SDL_GetTicks();
         while (SDL_PollEvent(&e)) {
@@ -179,6 +193,25 @@ int Game::init(int width, int height) {
             SDL_RenderClear(m_renderer);
             //loadLevel();
             //m_background = loadTexture("Hintergrund.bmp");
+
+            bool neu = level(lastEnemy);
+            if (neu == true)
+            {
+                lastEnemy = SDL_GetTicks();
+            }
+
+
+            if (level1.fertig == false)
+            {
+                if (liveEnemy == 0 && level1.welle3.size()==0)
+                {
+                    level1.fertig = true;
+
+                }
+            }
+
+
+            
             render();
             SDL_RenderPresent(m_renderer);
         }
@@ -232,109 +265,121 @@ void Game::cleanup()
 
 }
 
+bool Game::level(unsigned int lastEnemy)
+{
+    Enemy enemy;
+    unsigned int akt = SDL_GetTicks();
+    if (akt - lastEnemy > 1000)
+    {
+        if (level1.fertig == false)
+        {
+            if (level1.welle1.size() > 0)
+            {
+                enemy = level1.welle1.top();
+                level1.welle1.pop();
+                bool weiter = true;
+                for (int i = 0; weiter == true and i < MaxEnemy; i++)
+                {
+                    if (enemyArray[i].getType() == notEnemy)
+                    {
+                        enemyArray[i] = enemy;
+                        weiter = false;
+                        return true;
+                    }
+                }
+            }
+            else if (level1.welle2.size() > 0)
+            {
+                if (level1.welle2Angefangen == false)
+                {
+                    if (akt - lastEnemy > level1.timeBetweenWelle12)
+                    {
+                        level1.welle2Angefangen = true;
+                        enemy = level1.welle2.top();
+                        level1.welle2.pop();
+                        bool weiter = true;
+                        for (int i = 0; weiter == true and i < MaxEnemy; i++)
+                        {
+                            if (enemyArray[i].getType() == notEnemy)
+                            {
+                                enemyArray[i] = enemy;
+                                weiter = false;
+                                return true;
+                            }
+                        }
+                    }
+
+                    
+                }
+                else
+                {
+                    enemy = level1.welle2.top();
+                    level1.welle2.pop();
+                    bool weiter = true;
+                    for (int i = 0; weiter == true and i < MaxEnemy; i++)
+                    {
+                        if (enemyArray[i].getType() == notEnemy)
+                        {
+                            enemyArray[i] = enemy;
+                            weiter = false;
+                            return true;
+                        }
+                    }
+                }
+                
+            }
+            else if (level1.welle3.size() > 0)
+            {
+                if (level1.welle3Angefangen == false)
+                {
+                    if (akt - lastEnemy > level1.timeBetweenWelle23)
+                    {
+                        level1.welle3Angefangen = true;
+                        enemy = level1.welle3.top();
+                        level1.welle3.pop();
+                        bool weiter = true;
+                        for (int i = 0; weiter == true and i < MaxEnemy; i++)
+                        {
+                            if (enemyArray[i].getType() == notEnemy)
+                            {
+                                enemyArray[i] = enemy;
+                                weiter = false;
+                                return true;
+                            }
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    enemy = level1.welle3.top();
+                    level1.welle3.pop();
+                    bool weiter = true;
+                    for (int i = 0; weiter == true and i < MaxEnemy; i++)
+                    {
+                        if (enemyArray[i].getType() == notEnemy)
+                        {
+                            enemyArray[i] = enemy;
+                            weiter = false;
+                            return true;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    return false;
+}
+
+
+
+
 void Game::loadField()
 {
-    startWeg1.x = 0;
-    startWeg1.y = 96;
-
-    startWeg2.x = 0;
-    startWeg2.y = 320;
-
-    startWeg3.x = 0;
-    startWeg3.y = 448 ; 
-
-    field[0][3] = weg;
-    field[1][3] = weg;
-    field[2][3] = weg;
-    field[3][3] = weg;
-    field[4][3] = weg;
-    field[5][3] = weg;
-    field[6][3] = weg;
-    field[7][3] = weg;
-    field[8][3] = weg;
-    field[9][3] = weg;
-    field[10][3] = weg;
-    field[11][3] = weg;
-    field[11][4] = weg;
-    field[12][4] = weg;
-    field[13][4] = weg;
-    field[14][4] = weg;
-    field[14][5] = weg;
-    field[14][6] = weg;
-    field[15][6] = weg;
-    field[16][6] = weg;
-    field[17][6] = weg;
-    field[18][6] = weg;
-    field[19][6] = weg;
-    field[20][6] = weg;
-    field[21][6] = weg;
-    field[21][7] = weg;
-    field[21][8] = weg;
-    field[21][9] = weg;
-
-
-
-    field[0][10] = weg;
-    field[1][10] = weg;
-    field[2][10] = weg;
-    field[3][10] = weg;
-    field[3][11] = weg;
-    field[4][11] = weg;
-    field[5][11] = weg;
-    field[5][10] = weg;
-    field[6][10] = weg;
-    field[7][10] = weg;
-    field[8][10] = weg;
-    field[9][10] = weg;
-    field[10][10] = weg;
-    field[11][10] = weg;
-    field[12][10] = weg;
-    field[13][10] = weg;
-    field[13][11] = weg;
-    field[14][11] = weg;
-    field[15][11] = weg;
-    field[16][11] = weg;
-    field[17][11] = weg;
-    field[17][10] = weg;
-    field[18][10] = weg;
-    field[19][10] = weg;
-    field[20][10] = weg;
-
-    field[0][14] = weg;
-    field[1][14] = weg;
-    field[2][14] = weg;
-    field[2][15] = weg;
-    field[2][16] = weg;
-    field[3][16] = weg;
-    field[4][16] = weg;
-    field[5][16] = weg;
-    field[5][17] = weg;
-    field[5][18] = weg;
-    field[6][18] = weg;
-    field[7][18] = weg;
-    field[8][18] = weg;
-    field[9][18] = weg;
-    field[9][17] = weg;
-    field[9][16] = weg;
-    field[10][16] = weg;
-    field[11][16] = weg;
-    field[12][16] = weg;
-    field[13][16] = weg;
-    field[14][16] = weg;
-    field[15][16] = weg;
-    field[16][16] = weg;
-    field[16][15] = weg;
-    field[16][14] = weg;
-    field[17][14] = weg;
-    field[18][14] = weg;
-    field[19][14] = weg;
-    field[20][14] = weg;
-    field[21][14] = weg;
-    field[21][13] = weg;
-    field[21][12] = weg;
-    field[21][11] = weg;
-
-    field[21][10] = burg;
+    
 }
 
 
@@ -571,26 +616,31 @@ void Game::render()
         }
     }
     //SDL_RenderPresent(m_renderer);
+    
+    //n = size(enemyArray);
+    //if (hilfe > 0)
+    //{
+    //    hilfe = hilfe-1;
+    //}
+    //else
+    //{
+    //    setNewRandomEnemy();
+    //    hilfe = 30;
+    //}
+
+
     // Gegner auf dem Spielfeld laden
-    n = size(enemyArray);
-    if (hilfe > 0)
-    {
-        hilfe = hilfe-1;
-    }
-    else
-    {
-        setNewRandomEnemy();
-        hilfe = 30;
-    }
 
     SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
     //std::cout << "Wir sind hier" << std::endl;
+    liveEnemy = 0;
     for (int i = 0; i < n; i++)
     {
         if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() >0)
         {
             renderGoblin(i);
             goEnemy(i);
+            liveEnemy += 1;
         }
     }
 
@@ -714,16 +764,16 @@ void Game::setNewRandomEnemy()
         default: type = notEnemy; break;
     }
 
-    if (type != notEnemy)
-    {
-        switch (randomWeg)
-        {
-            default:
-            case 0: setEnemy(startWeg1.x, startWeg1.y, type); break;
-            case 1: setEnemy(startWeg2.x, startWeg2.y, type); break;
-            case 2: setEnemy(startWeg3.x, startWeg3.y, type); break;
-        }
-    }
+    //if (type != notEnemy)
+    //{
+        //switch (randomWeg)
+        //{
+            //default:
+            //case 0: setEnemy(startWeg1.x, startWeg1.y, type); break;
+            //case 1: setEnemy(startWeg2.x, startWeg2.y, type); break;
+            //case 2: setEnemy(startWeg3.x, startWeg3.y, type); break;
+        //}
+    //}
 }
 
 
