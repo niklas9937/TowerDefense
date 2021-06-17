@@ -262,12 +262,12 @@ int Game::init(int width, int height) {
 
             SDL_RenderPresent(m_renderer);
         }
-        unsigned int endTime = SDL_GetTicks();
-        unsigned int deltaTime = endTime - startTime;
-        if (deltaTime < 1)
-        {
-            SDL_Delay(1 - deltaTime);
-        }
+        //unsigned int endTime = SDL_GetTicks();
+        //unsigned int deltaTime = endTime - startTime;
+        //if (deltaTime < 16)
+        //{
+          //  SDL_Delay(1 - deltaTime);
+        //}
     }
     
     cleanup();
