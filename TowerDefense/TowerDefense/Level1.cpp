@@ -18,7 +18,7 @@ Level1::Level1()
 
     //Welle3
     Enemy enemy5(goblin, Point{ weg3.x,weg3.y });
-    welle3.push(enemy4);
+    welle3.push(enemy5);
 
 
 

@@ -173,6 +173,34 @@ int Game::init(int width, int height) {
                 selected = AffinityType::nothing;
             }
         }
+        if (level1.fertig == false)
+        {
+            if (liveEnemy == 0 && level1.welle3.size() == 0)
+            {
+                level1.fertig = true;
+                TTF_Font* Sans = TTF_OpenFont("arial.ttf", 60);
+                SDL_Color Red = { 139, 0, 0 };
+
+                std::ostringstream oss;
+                oss << "You Win ";
+                std::string var = oss.str();
+
+
+
+                SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), Red);
+                SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
+                SDL_Rect Message_rect = { 250,350,surfaceMessage->w,surfaceMessage->h }; //create a rect
+                SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
+
+                SDL_UpdateWindowSurface(m_window);
+
+                SDL_FreeSurface(surfaceMessage);
+                SDL_DestroyTexture(Message);
+                TTF_CloseFont(Sans);
+
+                SDL_RenderPresent(m_renderer);
+            }
+        }
         if (verloren == false)
         {
             SDL_RenderClear(m_renderer);
@@ -184,18 +212,6 @@ int Game::init(int width, int height) {
             {
                 lastEnemy = SDL_GetTicks();
             }
-
-
-            if (level1.fertig == false)
-            {
-                if (liveEnemy == 0 && level1.welle3.size()==0)
-                {
-                    level1.fertig = true;
-
-                }
-            }
-
-
             
             render();
             SDL_RenderPresent(m_renderer);

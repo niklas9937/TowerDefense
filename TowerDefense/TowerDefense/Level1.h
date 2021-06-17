@@ -39,8 +39,8 @@ public:
 	};
 	startWeg3 weg3;
 	bool fertig = false;
-	unsigned int timeBetweenWelle12 = 200000;
-	unsigned int timeBetweenWelle23 = 250000;
+	unsigned int timeBetweenWelle12 = 20000;
+	unsigned int timeBetweenWelle23 = 25000;
 
 	
 	Terrain field[25][20];
