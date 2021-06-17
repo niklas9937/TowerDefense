@@ -265,7 +265,7 @@ int Game::init(int width, int height) {
         unsigned int deltaTime = endTime - startTime;
         if (deltaTime < 16)
         {
-            SDL_Delay(1 - deltaTime);
+            SDL_Delay(16 - deltaTime);
         }
     }
     
