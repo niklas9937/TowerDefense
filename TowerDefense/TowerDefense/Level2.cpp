@@ -1,26 +1,20 @@
-#include "Level1.h"
-Level1::Level1()
+#include "Level2.h"
+Level2::Level2()
 {
-	//Welle 1
-	Enemy enemy1(goblin, Point{ weg1.x,weg1.y });
-	welle1.push(enemy1);
+    //Welle 1
+    Enemy enemy1(goblin, Point{ weg1.x,weg1.y });
+    welle1.push(enemy1);
 
-	Enemy enemy2(goblin_knite, Point{ weg2.x,weg2.y });
-	welle1.push(enemy2);
+    Enemy enemy2(goblin_knite, Point{ weg2.x,weg2.y });
+    welle1.push(enemy2);
 
-	Enemy enemy3(slim_goblin, Point{ weg2.x,weg2.y });
-	welle1.push(enemy3);
-
-
-	//Welle 2
-	Enemy enemy4(goblin, Point{ weg2.x,weg2.y });
-	welle2.push(enemy4);
-
-    //Welle3
-    Enemy enemy5(goblin, Point{ weg3.x,weg3.y });
-    welle3.push(enemy4);
+    Enemy enemy3(slim_goblin, Point{ weg2.x,weg2.y });
+    welle1.push(enemy3);
 
 
+    //Welle 2
+    Enemy enemy4(goblin, Point{ weg2.x,weg2.y });
+    welle2.push(enemy4);
 
 
     field[0][3] = weg;

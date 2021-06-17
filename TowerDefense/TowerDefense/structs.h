@@ -5,6 +5,7 @@
 enum EnemyType { notEnemy, goblin, goblin_knite, slim_goblin };
 enum AffinityType { nothing, small, medium, large, fire, water, wind, lightning, plant, toxic };
 enum Destination { nowhere, right, left, top, bottom};
+enum Terrain { gras, weg, burg };
 typedef struct Point
 {
 	int x;
