@@ -60,6 +60,7 @@ int Game::init(int width, int height) {
     int xwindow, ywindow;
     AffinityType selected = AffinityType::nothing;
     while (!quit) {
+        unsigned int startTime = SDL_GetTicks();
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
                 quit = true;
@@ -190,7 +191,12 @@ int Game::init(int width, int height) {
 
             SDL_RenderPresent(m_renderer);
         }
-
+        unsigned int endTime = SDL_GetTicks();
+        unsigned int deltaTime = endTime - startTime;
+        if (deltaTime < 16)
+        {
+            SDL_Delay(16 - deltaTime);
+        }
     }
     
     cleanup();
