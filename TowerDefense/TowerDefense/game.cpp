@@ -79,13 +79,13 @@ int Game::init(int width, int height) {
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
-            /*if (e.type == SDL_MOUSEMOTION) {
+            if (e.type == SDL_MOUSEMOTION) {
             
                 SDL_GetGlobalMouseState(&xMouse, &yMouse);
                 SDL_GetWindowPosition(m_window, &xwindow, &ywindow);
                 xMouse = xMouse - xwindow;
                 yMouse = yMouse - ywindow;
-                std::cout << xMouse << " " << yMouse << std::endl;
+                //std::cout << xMouse << " " << yMouse << std::endl;
                 xMouse = xMouse / 32;
                 int x = (int)xMouse;
                 yMouse = yMouse / 32;
@@ -98,7 +98,7 @@ int Game::init(int width, int height) {
                 {
                     x = x - 21;
                     y = y - 21;
-                    std::cout << towers[x][y];
+                    //std::cout << towers[x][y];
                     SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
                     
 
@@ -125,7 +125,7 @@ int Game::init(int width, int height) {
 
                     SDL_RenderPresent(m_renderer);
                 }
-            }*/
+            }
             if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
 
                 SDL_GetGlobalMouseState(&xMouse, &yMouse);
@@ -695,7 +695,7 @@ void Game::render()
 
     SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), White);
     SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
-    SDL_Rect Message_rect = { 350,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
+    SDL_Rect Message_rect = { 200,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
     SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
 
     SDL_UpdateWindowSurface(m_window);
@@ -703,6 +703,28 @@ void Game::render()
     SDL_FreeSurface(surfaceMessage);
     SDL_DestroyTexture(Message);
     TTF_CloseFont(Sans);
+
+    //Selected Defense anzeigen
+
+    TTF_Font* Sans2 = TTF_OpenFont("arial.ttf", 20);
+    SDL_Color White2 = { 0xff, 0xff, 0xff };
+
+    std::ostringstream oss2;
+    oss2 << "Selected Defense: ";
+    std::string var2 = oss2.str();
+
+
+
+    SDL_Surface* surfaceMessage2 = TTF_RenderText_Solid(Sans2, var2.c_str(), White2);
+    SDL_Texture* Message2 = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage2);
+    SDL_Rect Message_rect2 = { 450,700,surfaceMessage2->w,surfaceMessage2->h }; //create a rect
+    SDL_RenderCopy(m_renderer, Message2, NULL, &Message_rect2);
+
+    SDL_UpdateWindowSurface(m_window);
+
+    SDL_FreeSurface(surfaceMessage2);
+    SDL_DestroyTexture(Message2);
+    TTF_CloseFont(Sans2);
 }
 
 
@@ -956,8 +978,8 @@ void Game::isInside2(int indexDefense, int indexEnemy)
         {
             if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
             {
-                int x = enemyArray[i].getXPosi();
-                int y = enemyArray[i].getYPosi();
+                int x = enemyArray[i].getXPosi()+16;
+                int y = enemyArray[i].getYPosi()+16;
                 if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
                 {//Im radius == schießen
                     setAttack(indexDefense, i);
@@ -981,8 +1003,8 @@ void Game::isInside2(int indexDefense, int indexEnemy)
         {
             if (enemyArray[indexEnemy].getType() != notEnemy && enemyArray[indexEnemy].getHealthPoints() > 0)
             {
-                int x = enemyArray[indexEnemy].getXPosi();
-                int y = enemyArray[indexEnemy].getYPosi();
+                int x = enemyArray[indexEnemy].getXPosi()+16;
+                int y = enemyArray[indexEnemy].getYPosi()+16;
                 if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
                 {
                     //Im radius == schießen
@@ -1005,8 +1027,8 @@ void Game::isInside2(int indexDefense, int indexEnemy)
                     {
                         if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
                         {
-                            int x = enemyArray[i].getXPosi();
-                            int y = enemyArray[i].getYPosi();
+                            int x = enemyArray[i].getXPosi()+16;
+                            int y = enemyArray[i].getYPosi()+16;
                             if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
                             {//Im radius == schießen
                                 towerArray[indexDefense].setIndexAttackOfEnemy(i);
@@ -1036,8 +1058,8 @@ void Game::isInside2(int indexDefense, int indexEnemy)
             {
                 if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
                 {
-                    int x = enemyArray[i].getXPosi();
-                    int y = enemyArray[i].getYPosi();
+                    int x = enemyArray[i].getXPosi()+16;
+                    int y = enemyArray[i].getYPosi()+16;
                     if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
                     {//Im radius == schießen
                         towerArray[indexDefense].setIndexAttackOfEnemy(i);
