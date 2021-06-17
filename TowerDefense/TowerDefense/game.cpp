@@ -1057,8 +1057,8 @@ void Game::isInside2(int indexDefense, int indexEnemy)
                 {
                     if (enemyArray[i].getType() != notEnemy && enemyArray[i].getHealthPoints() > 0)
                     {
-                        int x = enemyArray[i].getXPosi();
-                        int y = enemyArray[i].getYPosi();
+                        int x = enemyArray[i].getXPosi() +16;
+                        int y = enemyArray[i].getYPosi() +16;
                         if ((x - xTower) * (x - xTower) + (y - yTower) * (y - yTower) <= rad * rad)
                         {//Im radius == schießen
                             towerArray[indexDefense].setIndexAttackOfEnemy(i);
