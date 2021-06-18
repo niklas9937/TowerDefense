@@ -77,3 +77,14 @@ Wir haben, wo wir schon einmal dabei waren, den Enemy-Konstruktor so angepasst d
 Wir haben die Darstellung der Reichweite nun so angepasst, dass die Kreise um die Türem jetzt auch die richtigen Reichweiten wiederspiegeln. Türme greifen nun auch nur noch ein Ziel an, anstatt allen um umkreis Schaden zuzufügen.
 
 Wir wollen demnächst die Geschwindigkeit des Spieles unabhängig vom System des Spielers machen. Das heißt, das wir irgendwie den Loop so einstellen müssen, dass er nicht schneller ist wenn der PC besser ist. Bei dieser Aufgabe wollen wir und nächste Woche in der Fragestunde hilfe hohlen.
+
+**17.06.2021**
+Wir haben heute das Problem mit den unterschiedlichen Geschwindigkeiten auf unterschiedlichen Prozessorleistungen dank großer Hilfe gelöst. Wir haben das Spiel ein bisschen verändert, damit wir demnächst vielleicht verschiedene Level anbieten können. Unsere Wege und Wellen an Gegner werden jetzt aus den Leveln geladen. Wir wussten am Anfang nicht wie man ein Spiel mit verschiedenen Leveln anlegt. Da haben uns aber viele Beispiel Spiele bei GitHub geholfen. Wir haben uns jetzt dazu entschlossen, es mit einer h und cpp Datei und Klassen zu nutzen. Keine andere Variante fanden wir umsetzbar bei unserem Spiel. 
+
+Wir hatten ein kleines Problem mit den Türmen, dass sie nicht immer auf die Gegener geschossen haben. Dies war im Nachinein ein kleiner If-Anweisung Dummheitsfehler. Jetzt schießen sie ordentlich. Ebenfalls haben wir die Turmkonstruktoren so angepasst, dass Türme anhand des Typs die richtigen Stats gegeben werden. So kann der Konstrukur nun, anders als in den ersten Test Varianten, ordentlich genutzt werden.
+
+Dadurch das wir die Level eingeführt haben, gibt es jetzt die Möglichkeit zu gewinnen.
+
+Es gibt jetzt 3 Wellen mit unterschieldlichen Gegnern zu unterschiedlichen Zeiten. 
+
+
