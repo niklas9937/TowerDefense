@@ -92,3 +92,4 @@ Es gibt jetzt 3 Wellen mit unterschieldlichen Gegnern zu unterschiedlichen Zeite
 Heute haben wir uns der feinheiten angenommen. Es ging uns heute darum das Spielerlebnis interaktiver zu machen. Dazu wollten wir dem Spieler mitteilen was der Turm, den er gerade ausgewählt hat, eigentlich kann. Dazu haben wir im Informationsteil des Spiels (Schwarzes Feld unten) eine Beschribung des ausgewählten Turms angezeigt. Die Beschreibung des Turms umfasst Preis, Schaden und eine Beschreibung, welche die Angriffsart oder Besonderheit eines Turms angibt. Dazu haben wir auch noch anzeigen lassen welchen der Türme aus dem Auswahl-Feld jetzt eigentlich ausgewählt ist.
 
 Dazu gibt es jetzt auch noch eine Levelanzeige wo angeziegt wird wie viele Wellen es in diesem Level zu besiegen sind und wie viele bereits besiegt wurden.
+![Game](NeueFunktionen.JPG)
