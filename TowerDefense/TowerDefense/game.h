@@ -51,6 +51,7 @@ private:
 	int hilfe = 30;
 	int height;
 	int width;
+	AffinityType selectedDefense = AffinityType::nothing; 
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
 	SDL_Renderer* m_renderer2;
