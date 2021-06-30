@@ -3,13 +3,13 @@
 #define defense_h
 #include <stdio.h>
 #include "structs.h"
-
+#include <string>
 
 class Defense {
-	
+
 public:
 	Defense();
-	Defense(AffinityType, Point,int);
+	Defense(AffinityType, Point, int);
 	int getXPosi();
 	int getYPosi();
 	AffinityType getAffinity();
@@ -21,6 +21,7 @@ public:
 private:
 	AffinityType affinity;
 	int range;
+	std::string beschreibung;
 	Point posi;
 	int price;
 	int damage;
