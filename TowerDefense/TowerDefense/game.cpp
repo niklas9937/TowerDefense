@@ -286,10 +286,12 @@ bool Game::level(unsigned int lastEnemy)
             }
             else if (level1.welle2.size() > 0)
             {
+                
                 if (level1.welle2Angefangen == false)
                 {
                     if (akt - lastEnemy > level1.timeBetweenWelle12)
                     {
+                        welle = 2;
                         level1.welle2Angefangen = true;
                         enemy = level1.welle2.top();
                         level1.welle2.pop();
@@ -309,6 +311,7 @@ bool Game::level(unsigned int lastEnemy)
                 }
                 else
                 {
+                    
                     enemy = level1.welle2.top();
                     level1.welle2.pop();
                     bool weiter = true;
@@ -326,10 +329,12 @@ bool Game::level(unsigned int lastEnemy)
             }
             else if (level1.welle3.size() > 0)
             {
+                
                 if (level1.welle3Angefangen == false)
                 {
                     if (akt - lastEnemy > level1.timeBetweenWelle23)
                     {
+                        welle = 3;
                         level1.welle3Angefangen = true;
                         enemy = level1.welle3.top();
                         level1.welle3.pop();
@@ -662,9 +667,44 @@ void Game::render()
     }
     
 
+    // Wellenanzahl anzeigen
+
+    TTF_Font* Sans6 = TTF_OpenFont("arial.ttf", 16);
+    SDL_Color White6 = { 0xff, 0xff, 0xff };
+
+    std::ostringstream oss6;
+    oss6 << welle <<" / 3   Welle" ;
+    std::string var6 = oss6.str();
+
+
+
+    SDL_Surface* surfaceMessage6 = TTF_RenderText_Solid(Sans6, var6.c_str(), White6);
+    SDL_Texture* Message6 = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage6);
+    SDL_Rect Message_rect6 = {40,720,surfaceMessage6->w,surfaceMessage6->h }; //create a rect
+    SDL_RenderCopy(m_renderer, Message6, NULL, &Message_rect6);
+
+    std::ostringstream oss7;
+    oss7 << "Level:   1 ";
+    std::string var7 = oss7.str();
+
+    SDL_Surface* surfaceMessage7 = TTF_RenderText_Solid(Sans6, var7.c_str(), White6);
+    SDL_Texture* Message7 = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage7);
+    SDL_Rect Message_rect7 = { 40,700,surfaceMessage7->w,surfaceMessage7->h }; //create a rect
+    SDL_RenderCopy(m_renderer, Message7, NULL, &Message_rect7);
+
+
+    SDL_UpdateWindowSurface(m_window);
+
+    SDL_FreeSurface(surfaceMessage6);
+    SDL_DestroyTexture(Message6);
+    SDL_FreeSurface(surfaceMessage7);
+    SDL_DestroyTexture(Message7);
+    TTF_CloseFont(Sans6);
+
+
     // Gold anzeigen
 
-    TTF_Font* Sans = TTF_OpenFont("arial.ttf", 20);
+    TTF_Font* Sans = TTF_OpenFont("arial.ttf", 22);
     SDL_Color White = { 0xff, 0xff, 0xff };
 
     std::ostringstream oss;
@@ -675,7 +715,7 @@ void Game::render()
 
     SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), White);
     SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
-    SDL_Rect Message_rect = { 190,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
+    SDL_Rect Message_rect = { 250,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
     SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
 
     SDL_UpdateWindowSurface(m_window);

@@ -48,6 +48,7 @@ private:
 	int indexTowerArray = 0;
 	int indexEnemyArray = 0;
 	int indexAttackArray = 0;
+	int welle = 1;
 	int hilfe = 30;
 	int height;
 	int width;
