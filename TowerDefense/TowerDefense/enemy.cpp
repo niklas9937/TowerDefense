@@ -13,9 +13,9 @@ Enemy::Enemy(EnemyType race, Point coords)
 	{
 		default: Enemy::haste = 1; Enemy::healthPoints = 100; Enemy::reward = 10;
 		case EnemyType::notEnemy: Enemy::haste = 0; Enemy::healthPoints = 100; Enemy::reward = 0;
-		case EnemyType::goblin: Enemy::haste = 1; Enemy::healthPoints = 100; Enemy::reward = 15; break;
-		case EnemyType::goblin_knite: Enemy::haste = 1; Enemy::healthPoints = 200; Enemy::reward = 25; break;
-		case EnemyType::slim_goblin: Enemy::haste = 2; Enemy::healthPoints = 50; Enemy::reward = 25; break;
+		case EnemyType::goblin: Enemy::haste = 1; Enemy::healthPoints = 150; Enemy::reward = 15; break;
+		case EnemyType::goblin_knite: Enemy::haste = 1; Enemy::healthPoints = 300; Enemy::reward = 25; break;
+		case EnemyType::slim_goblin: Enemy::haste = 2; Enemy::healthPoints = 100; Enemy::reward = 25; break;
 	}
 
 }

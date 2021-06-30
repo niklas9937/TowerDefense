@@ -122,15 +122,15 @@ int Game::init(int width, int height) {
                         switch (selectedDefense)
                             {
                             default: price = 0;
-                            case AffinityType::small: price = 40;; break;
-                            case AffinityType::medium: price = 90; break;
-                            case AffinityType::large: price = 140;; break;
-                            case AffinityType::fire: price = 190;; break;
-                            case AffinityType::lightning: price = 240; break;
-                            case AffinityType::plant: price = 190; break;
-                            case AffinityType::toxic: price = 190; break;
-                            case AffinityType::water: price = 190; break;
-                            case AffinityType::wind: price = 190; break;
+                            case AffinityType::small: price = 50;; break;
+                            case AffinityType::medium: price = 100; break;
+                            case AffinityType::large: price = 150;; break;
+                            case AffinityType::fire: price = 200;; break;
+                            case AffinityType::lightning: price = 250; break;
+                            case AffinityType::plant: price = 200; break;
+                            case AffinityType::toxic: price = 200; break;
+                            case AffinityType::water: price = 200; break;
+                            case AffinityType::wind: price = 200; break;
                             case AffinityType::nothing: price = 0; break;
                             }
 
