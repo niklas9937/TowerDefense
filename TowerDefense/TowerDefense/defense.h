@@ -18,6 +18,7 @@ public:
 	int getDamage();
 	int getIndexAttackOfEnemy();
 	void setIndexAttackOfEnemy(int index);
+	std::string getBeschreibung() { return beschreibung; }
 private:
 	AffinityType affinity;
 	int range;
