@@ -71,7 +71,6 @@ int Game::init(int width, int height) {
     SDL_Event e;
     int xMouse, yMouse;
     int xwindow, ywindow;
-    AffinityType selected = AffinityType::nothing;
     unsigned int lastEnemy = SDL_GetTicks();
     while (!quit) {
         unsigned int startTime = SDL_GetTicks();
@@ -98,32 +97,7 @@ int Game::init(int width, int height) {
                 {
                     x = x - 21;
                     y = y - 21;
-                    //std::cout << towers[x][y];
-                    SDL_SetRenderDrawColor(m_renderer, 205, 179, 139, 255);
-                    
-
-                    TTF_Font* Sans = TTF_OpenFont("arial.ttf", 20);
-                    SDL_Color Red = { 139, 0, 0 };
-
-                    std::ostringstream oss;
-                    oss << "Damage "<<towers[x][y];
-                    std::string var = oss.str();
-
-
-
-                    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), Red);
-                    SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
-                    SDL_Rect Message_rect = { 550,550,surfaceMessage->w,surfaceMessage->h }; //create a rect
-                    SDL_RenderFillRect(m_renderer, &Message_rect);
-                    SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
-
-                    SDL_UpdateWindowSurface(m_window);
-
-                    SDL_FreeSurface(surfaceMessage);
-                    SDL_DestroyTexture(Message);
-                    TTF_CloseFont(Sans);
-
-                    SDL_RenderPresent(m_renderer);
+                   
                 }
             }
             if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
@@ -141,11 +115,11 @@ int Game::init(int width, int height) {
 
                 if (x < xField && y < yField)
                 {
-                    if (field[x][y] == gras && selected != AffinityType::nothing)
+                    if (field[x][y] == gras && selectedDefense != AffinityType::nothing)
                     {
 
                         int price = 0;
-                        switch (selected)
+                        switch (selectedDefense)
                             {
                             default: price = 0;
                             case AffinityType::small: price = 50;; break;
@@ -162,7 +136,7 @@ int Game::init(int width, int height) {
 
                         if (gold - price > 0)
                         {
-                            int h = setDefense(x, y, selected, price);
+                            int h = setDefense(x, y, selectedDefense, price);
                             gold = gold - price;
                             //SDL_RenderClear(m_renderer);
                             //loadLevel();
@@ -176,7 +150,7 @@ int Game::init(int width, int height) {
                 {
                     x = x - 21;
                     y = y - 21;
-                    selected = towers[x][y];
+                    selectedDefense = towers[x][y];
 
                 }
 
@@ -184,7 +158,7 @@ int Game::init(int width, int height) {
             }
             if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_RIGHT)
             {
-                selected = AffinityType::nothing;
+                selectedDefense = AffinityType::nothing;
             }
         }
         if (level1.fertig == false)
@@ -695,7 +669,7 @@ void Game::render()
 
     SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, var.c_str(), White);
     SDL_Texture* Message = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage);
-    SDL_Rect Message_rect = { 200,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
+    SDL_Rect Message_rect = { 190,700,surfaceMessage->w,surfaceMessage->h }; //create a rect
     SDL_RenderCopy(m_renderer, Message, NULL, &Message_rect);
 
     SDL_UpdateWindowSurface(m_window);
@@ -709,22 +683,103 @@ void Game::render()
     TTF_Font* Sans2 = TTF_OpenFont("arial.ttf", 20);
     SDL_Color White2 = { 0xff, 0xff, 0xff };
 
+    Point p;
+    p.x = 900;
+    p.y = 900;
+
+    Defense def (selectedDefense,p, 0);
+
+    int pr = def.getPrice();
+    int da = def.getDamage();
+    int range = def.getRange();
+
     std::ostringstream oss2;
-    oss2 << "Selected Defense: ";
+    oss2 << "Selected Defense:  ";
     std::string var2 = oss2.str();
 
 
 
     SDL_Surface* surfaceMessage2 = TTF_RenderText_Solid(Sans2, var2.c_str(), White2);
     SDL_Texture* Message2 = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage2);
-    SDL_Rect Message_rect2 = { 450,700,surfaceMessage2->w,surfaceMessage2->h }; //create a rect
+    SDL_Rect Message_rect2 = { 450,680,surfaceMessage2->w,surfaceMessage2->h }; //create a rect
     SDL_RenderCopy(m_renderer, Message2, NULL, &Message_rect2);
 
-    SDL_UpdateWindowSurface(m_window);
 
     SDL_FreeSurface(surfaceMessage2);
     SDL_DestroyTexture(Message2);
     TTF_CloseFont(Sans2);
+
+    ///
+
+    TTF_Font* Sans3 = TTF_OpenFont("arial.ttf", 17);
+    SDL_Color White3 = { 0xff, 0xff, 0xff };
+
+    std::ostringstream oss3;
+    oss3 << "Price:  "<< pr;
+    std::string var3 = oss3.str();
+
+
+
+    SDL_Surface* surfaceMessage3 = TTF_RenderText_Solid(Sans3, var3.c_str(), White3);
+    SDL_Texture* Message3 = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage3);
+    SDL_Rect Message_rect3 = { 450,720,surfaceMessage3->w,surfaceMessage3->h }; //create a rect
+    SDL_RenderCopy(m_renderer, Message3, NULL, &Message_rect3);
+
+
+
+
+    
+    SDL_FreeSurface(surfaceMessage3);
+    SDL_DestroyTexture(Message3);
+
+    
+    ////
+
+    std::ostringstream oss4;
+    oss4 << "Damage:  " << da;
+    std::string var4 = oss4.str();
+
+
+
+    SDL_Surface* surfaceMessage4 = TTF_RenderText_Solid(Sans3, var4.c_str(), White3);
+    SDL_Texture* Message4 = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage4);
+    SDL_Rect Message_rect4 = { 450,740,surfaceMessage4->w,surfaceMessage4->h }; //create a rect
+    SDL_RenderCopy(m_renderer, Message4, NULL, &Message_rect4);
+
+
+
+
+    SDL_UpdateWindowSurface(m_window);
+
+
+    SDL_FreeSurface(surfaceMessage4);
+    SDL_DestroyTexture(Message4);
+
+    ////
+
+    std::ostringstream oss5;
+    oss5 << "Damage:  " << da;
+    std::string var5 = oss5.str();
+
+
+
+    SDL_Surface* surfaceMessage5 = TTF_RenderText_Solid(Sans3, var5.c_str(), White3);
+    SDL_Texture* Message5 = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage5);
+    SDL_Rect Message_rect5 = { 450,760,surfaceMessage5->w,surfaceMessage5->h }; //create a rect
+    SDL_RenderCopy(m_renderer, Message5, NULL, &Message_rect5);
+
+
+
+
+    SDL_UpdateWindowSurface(m_window);
+
+
+    SDL_FreeSurface(surfaceMessage5);
+    SDL_DestroyTexture(Message5);
+
+
+
+    TTF_CloseFont(Sans3);
 }
 
 
