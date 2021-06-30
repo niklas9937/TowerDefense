@@ -543,6 +543,12 @@ void Game::render()
     {
         for (int j = 0; j < 3; j++)
         {
+            SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+            if (selectedDefense == indexBild)
+            {
+                SDL_SetRenderDrawColor(m_renderer, 0xff, 0x00, 0x00, 0xff);
+
+            }
             SDL_Rect sdlRect = { ((hX + j) * 32), ((hY + i) * 32), 32, 32 };
             SDL_RenderDrawRect(m_renderer, &sdlRect);
             SDL_Surface* image = NULL; // SDL_LoadBMP("small.bmp");
@@ -559,7 +565,7 @@ void Game::render()
             case 8: image = IMG_Load("plant.png"); break;
             case 9: image = IMG_Load("toxic.png"); break;
             }
-
+            
             SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, image);
             SDL_RenderCopy(m_renderer, texture, NULL, &sdlRect);
             //SDL_RenderPresent(m_renderer);
@@ -582,7 +588,7 @@ void Game::render()
         if (towerArray[i].getAffinity()!= nothing)
         {
             //SDL_SetRenderDrawColor(m_renderer, 100, 100, 100, 0xff);
-
+            
             SDL_Rect sdlRect = { (towerArray[i].getXPosi() * 32), (towerArray[i].getYPosi() * 32), 32, 32 };
             //SDL_RenderFillRect(m_renderer, &sdlRect);
 
@@ -758,12 +764,12 @@ void Game::render()
     ////
 
     std::ostringstream oss5;
-    oss5 << "Damage:  " << da;
+    oss5 << def.getBeschreibung().c_str();
     std::string var5 = oss5.str();
 
 
 
-    SDL_Surface* surfaceMessage5 = TTF_RenderText_Solid(Sans3, var5.c_str(), White3);
+    SDL_Surface* surfaceMessage5 = TTF_RenderText_Solid(Sans3, def.getBeschreibung().c_str(), White3);
     SDL_Texture* Message5 = SDL_CreateTextureFromSurface(m_renderer, surfaceMessage5);
     SDL_Rect Message_rect5 = { 450,760,surfaceMessage5->w,surfaceMessage5->h }; //create a rect
     SDL_RenderCopy(m_renderer, Message5, NULL, &Message_rect5);
