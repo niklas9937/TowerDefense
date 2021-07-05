@@ -22,7 +22,7 @@ int Game::init(int width, int height, Level *whichLevel) {
     width = height;
     TTF_Init();
     IMG_Init(IMG_INIT_PNG);
-    SDL_Init(SDL_INIT_AUDIO);
+    //SDL_Init(SDL_INIT_AUDIO);
 
     m_window = SDL_CreateWindow("SDL Window",
         SDL_WINDOWPOS_UNDEFINED,
@@ -531,7 +531,7 @@ void Game::renderAttack(int index)
     
 
     // Play music and a sound
-    playSound("BOWMEN1.wav", SDL_MIX_MAXVOLUME / 2);
+    //playSound("BOWMEN1.wav", SDL_MIX_MAXVOLUME / 2);
 
 
     // End Simple-SDL2-Audio
@@ -673,7 +673,7 @@ void Game::render()
     //Attacken auf dem Spielfeld laden
 
    
-    initAudio();
+    //initAudio();
 
     for (int i = 0; i < MaxAttack ; i++)
     {
@@ -685,7 +685,7 @@ void Game::render()
         }
     }
     
-    endAudio();
+    //endAudio();
 
 
     // Wellenanzahl anzeigen
