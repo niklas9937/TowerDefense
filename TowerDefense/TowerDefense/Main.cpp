@@ -21,7 +21,7 @@ const int WinWidth = 800;
 const int WinHeight = 800;
 
 
-int hi()
+int hi(int statusLevel1, int statusLevel2, int statusLevel3)
 {
     // init sdl with video subsystem only and check if succeeded
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -59,7 +59,7 @@ int hi()
 
     //Überschrift
     TTF_Font* Sans3 = TTF_OpenFont("arial.ttf", 17);
-    SDL_Color White3 = { 0xff, 0xff, 0xff };
+    SDL_Color White0 = { 0xff, 0xff, 0xff };
 
     std::ostringstream oss0;
     oss0 << "Tower Defense ";
@@ -67,7 +67,7 @@ int hi()
 
 
 
-    SDL_Surface* surfaceMessage0 = TTF_RenderText_Solid(Sans3, var0.c_str(), White3);
+    SDL_Surface* surfaceMessage0 = TTF_RenderText_Solid(Sans3, var0.c_str(), White0);
     SDL_Texture* Message0 = SDL_CreateTextureFromSurface(sdlRenderer, surfaceMessage0);
     SDL_Rect Message_rect0 = { 45,50,surfaceMessage0->w,surfaceMessage0->h }; //create a rect
     SDL_RenderCopy(sdlRenderer, Message0, NULL, &Message_rect0);
@@ -81,7 +81,15 @@ int hi()
 
 
     //Level 1
-    SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
+    SDL_Color White3 = { 0, 0, 0 };
+
+    switch (statusLevel1)
+    {
+    default: SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255);
+    case -1: SDL_SetRenderDrawColor(sdlRenderer, 255, 0, 0, 255); break;
+    case 0: SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255); break;
+    case 1: SDL_SetRenderDrawColor(sdlRenderer, 0, 255, 0, 255); break;
+    }
 
     std::ostringstream oss1;
     oss1 << "  1  ";
@@ -105,6 +113,14 @@ int hi()
 
     //Level 2
 
+    switch (statusLevel2)
+    {
+    default: SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255);
+    case -1: SDL_SetRenderDrawColor(sdlRenderer, 255, 0, 0, 255); break;
+    case 0: SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255); break;
+    case 1: SDL_SetRenderDrawColor(sdlRenderer, 0, 255, 0, 255); break;
+    }
+
     std::ostringstream oss2;
     oss2 << "  2  ";
     std::string var2 = oss2.str();
@@ -126,6 +142,14 @@ int hi()
 
 
     //Level 3
+
+    switch (statusLevel3)
+    {
+    default: SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255);
+    case -1: SDL_SetRenderDrawColor(sdlRenderer, 255, 0, 0, 255); break;
+    case 0: SDL_SetRenderDrawColor(sdlRenderer, 255, 255, 255, 255); break;
+    case 1: SDL_SetRenderDrawColor(sdlRenderer, 0, 255, 0, 255); break;
+    }
 
     std::ostringstream oss3;
     oss3 << "  3  ";
@@ -204,54 +228,43 @@ int hi()
 
 int main(int argc, char* args[])
 {
+    SDL_Event e;
     bool weiter = true;
+    //Status
+    //-1 == verloren
+    //0 == noch nicht gespielt
+    // 1 == gewonnen
+    int statusLevel1 = 0;
+    int statusLevel2 = 0; 
+    int statusLevel3 = 0;
     while (weiter)
     {
-        int levelauswahl = hi();
+        int levelauswahl = hi(statusLevel1, statusLevel2, statusLevel3);
         Game game;
         std::cout << "HIHI" << std::endl;
         if (levelauswahl == 1)
         {
             Level* level1 = new Level1();
-            game.init(WinWidth, WinHeight, level1);
+            statusLevel1 = game.init(WinWidth, WinHeight, level1);
 
-            /**if (!game.init(WinWidth, WinHeight, level1))
-            {
-                std::cout << "Drin" << std::endl;
-                weiter = false;
-                return -1;
-            }**/
         }
         else if (levelauswahl == 2)
         {
             Level* level1 = new Level2();
-            game.init(WinWidth, WinHeight, level1);
-            /**if (!game.init(WinWidth, WinHeight, level1))
-            {
-                weiter = false;
-                return -1;
-            }**/
+            statusLevel2= game.init(WinWidth, WinHeight, level1);
+
         }
         else if (levelauswahl == 3)
         {
             Level* level3 = new Level3();
-            if (!game.init(WinWidth, WinHeight, level3))
-            {
-                weiter = false;
-                return -1;
-            }
+            statusLevel3 = game.init(WinWidth, WinHeight, level3);
+
         }
         else
         {
             return -1;
         }
     }
-    //Level *level1= new Level1();
-    /**if (!game.init(WinWidth, WinHeight,level1))
-    {
-        return -1;
-    }**/
-    //int o = hi();
     return 0;
 }
 
