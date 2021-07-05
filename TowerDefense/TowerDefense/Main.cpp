@@ -43,11 +43,13 @@ int hi()
 
     // attention... now leaving out checks
 
+    SDL_SetRenderDrawColor(sdlRenderer, 32, 32, 32, 255);
+
     SDL_RenderClear(sdlRenderer);
 
     // draw a rect
     // 1. set color to cyan (r, g, b, a)
-    SDL_SetRenderDrawColor(sdlRenderer, 255, 0, 0, 255);
+    SDL_RenderPresent(sdlRenderer);
 
 
     //Überschrift
