@@ -252,6 +252,16 @@ int Game::init(int width, int height, Level *whichLevel) {
     }
     
     cleanup();
+
+    if (verloren == true)
+    {
+        return -1;
+    }
+    else if (gewonnen == true)
+    {
+        return 1;
+    }
+
     return 0;
 }
 
