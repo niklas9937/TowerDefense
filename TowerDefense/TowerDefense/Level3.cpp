@@ -87,7 +87,9 @@ Level3::Level3()
     field[19][10] = weg;
     field[20][10] = weg;
 
-    field[17][19] = weg;
+    field[15][19] = weg;
+    field[16][19] = weg;
+    field[16][18] = weg;
     field[17][18] = weg;
     field[17][17] = weg;
     field[18][17] = weg;

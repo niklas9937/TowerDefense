@@ -1,6 +1,6 @@
 #pragma once
-#ifndef level1_h
-#define level1_h
+#ifndef level3_h
+#define level3_h
 
 #include "enemy.h"
 #include "structs.h"
@@ -31,7 +31,7 @@ public:
 	startWeg2 weg2;
 	typedef struct startWeg3
 	{
-		int x = 544;
+		int x = 480;
 		int y = 608;
 
 	};

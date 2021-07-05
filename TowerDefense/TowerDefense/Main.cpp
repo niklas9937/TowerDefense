@@ -6,6 +6,7 @@
 #include "Level.h"
 #include "Level1.h"
 #include "Level2.h"
+#include "Level3.h"
 #include "game.h"
 
 #include <string>
@@ -229,8 +230,8 @@ int main(int argc, char* args[])
         }
         else if (levelauswahl == 3)
         {
-            Level* level1 = new Level1();
-            if (!game.init(WinWidth, WinHeight, level1))
+            Level* level3 = new Level3();
+            if (!game.init(WinWidth, WinHeight, level3))
             {
                 weiter = false;
                 return -1;
