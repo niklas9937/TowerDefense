@@ -150,6 +150,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="attack.cpp" />
+    <ClCompile Include="audio.c" />
+    <ClCompile Include="audio.h" />
     <ClCompile Include="defense.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="game.cpp" />
