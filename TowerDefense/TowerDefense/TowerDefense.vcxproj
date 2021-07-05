@@ -157,6 +157,8 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="Level2.cpp" />
+    <ClCompile Include="Level3.cpp" />
+    <ClCompile Include="Level3.h" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
