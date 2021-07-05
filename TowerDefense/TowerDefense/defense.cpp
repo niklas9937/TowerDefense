@@ -12,7 +12,7 @@ Defense::Defense(AffinityType type, Point coords, int p)
 	switch (type)
 	{
 	default: Defense::posi = coords; Defense::price = 0; Defense::damage = 0; Defense::beschreibung = "N/A";
-	case AffinityType::small: Defense::posi = coords; Defense::price = 70; Defense::damage = 4; Defense::range = 40; Defense::beschreibung = "short range tower"; break;
+	case AffinityType::small: Defense::posi = coords; Defense::price = 60; Defense::damage = 4; Defense::range = 40; Defense::beschreibung = "short range tower"; break;
 		case AffinityType::medium: Defense::posi = coords; Defense::price = 100; Defense::damage = 5; Defense::range = 60; Defense::beschreibung = "medium range tower"; break;
 		case AffinityType::large: Defense::posi = coords; Defense::price = 150; Defense::damage = 5; Defense::range = 70; Defense::beschreibung = "long range tower"; break;
 		case AffinityType::fire: Defense::posi = coords; Defense::price = 200; Defense::damage = 10; Defense::range = 70; Defense::beschreibung = "fire attribute"; break;

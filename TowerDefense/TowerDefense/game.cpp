@@ -130,7 +130,7 @@ int Game::init(int width, int height, Level *whichLevel) {
                         switch (selectedDefense)
                             {
                             default: price = 0;
-                            case AffinityType::small: price = 70;; break;
+                            case AffinityType::small: price = 60;; break;
                             case AffinityType::medium: price = 100; break;
                             case AffinityType::large: price = 150;; break;
                             case AffinityType::fire: price = 200;; break;
