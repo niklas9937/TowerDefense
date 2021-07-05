@@ -2,7 +2,12 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <iostream>
+
+#include "Level.h"
+#include "Level1.h"
 #include "game.h"
+
+
 
 //Screen dimension constants
 const int WinWidth = 800;
@@ -15,7 +20,8 @@ const int WinHeight = 800;
 int main(int argc, char* args[])
 {
     Game game;
-    if (!game.init(WinWidth, WinHeight))
+    Level *level1= new Level1();
+    if (!game.init(WinWidth, WinHeight,level1))
     {
         return -1;
     }

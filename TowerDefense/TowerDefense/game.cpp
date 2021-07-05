@@ -11,7 +11,8 @@ using namespace std;
 Game::Game()
 {
 }
-int Game::init(int width, int height) {
+int Game::init(int width, int height, Level *whichLevel) {
+    level = whichLevel;
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cout << "Error initializing SDL: " << SDL_GetError() << std::endl;
@@ -43,13 +44,13 @@ int Game::init(int width, int height) {
         printf("Failed to load background texture image!\n");
     }
 
-    if (level1.fertig == false)
+    if (level->fertig == false)
     {
         for (int i = 0; i < xField; i++)
         {
             for (int j = 0; j < yField; j++)
             {
-                field[i][j] = level1.field[i][j];
+                field[i][j] = level->field[i][j];
             }
         }
     }
@@ -161,11 +162,11 @@ int Game::init(int width, int height) {
                 selectedDefense = AffinityType::nothing;
             }
         }
-        if (level1.fertig == false)
+        if (level->fertig == false)
         {
-            if (liveEnemy == 0 && level1.welle3.size() == 0)
+            if (liveEnemy == 0 && level->welle3.size() == 0)
             {
-                level1.fertig = true;
+                level->fertig = true;
                 gewonnen = true;
             }
         }
@@ -178,7 +179,7 @@ int Game::init(int width, int height) {
             //loadLevel();
             //m_background = loadTexture("Hintergrund.bmp");
 
-            bool neu = level(lastEnemy);
+            bool neu = levelWelle(lastEnemy);
             if (neu == true)
             {
                 lastEnemy = SDL_GetTicks();
@@ -261,18 +262,18 @@ void Game::cleanup()
 
 }
 
-bool Game::level(unsigned int lastEnemy)
+bool Game::levelWelle(unsigned int lastEnemy)
 {
     Enemy enemy;
     unsigned int akt = SDL_GetTicks();
     if (akt - lastEnemy > 1000)
     {
-        if (level1.fertig == false)
+        if (level->fertig == false)
         {
-            if (level1.welle1.size() > 0)
+            if (level->welle1.size() > 0)
             {
-                enemy = level1.welle1.top();
-                level1.welle1.pop();
+                enemy = level->welle1.top();
+                level->welle1.pop();
                 bool weiter = true;
                 for (int i = 0; weiter == true and i < MaxEnemy; i++)
                 {
@@ -284,17 +285,17 @@ bool Game::level(unsigned int lastEnemy)
                     }
                 }
             }
-            else if (level1.welle2.size() > 0)
+            else if (level->welle2.size() > 0)
             {
                 
-                if (level1.welle2Angefangen == false)
+                if (level->welle2Angefangen == false)
                 {
-                    if (akt - lastEnemy > level1.timeBetweenWelle12)
+                    if (akt - lastEnemy > level->timeBetweenWelle12)
                     {
                         welle = 2;
-                        level1.welle2Angefangen = true;
-                        enemy = level1.welle2.top();
-                        level1.welle2.pop();
+                        level->welle2Angefangen = true;
+                        enemy = level->welle2.top();
+                        level->welle2.pop();
                         bool weiter = true;
                         for (int i = 0; weiter == true and i < MaxEnemy; i++)
                         {
@@ -312,8 +313,8 @@ bool Game::level(unsigned int lastEnemy)
                 else
                 {
                     
-                    enemy = level1.welle2.top();
-                    level1.welle2.pop();
+                    enemy = level->welle2.top();
+                    level->welle2.pop();
                     bool weiter = true;
                     for (int i = 0; weiter == true and i < MaxEnemy; i++)
                     {
@@ -327,17 +328,17 @@ bool Game::level(unsigned int lastEnemy)
                 }
                 
             }
-            else if (level1.welle3.size() > 0)
+            else if (level->welle3.size() > 0)
             {
                 
-                if (level1.welle3Angefangen == false)
+                if (level->welle3Angefangen == false)
                 {
-                    if (akt - lastEnemy > level1.timeBetweenWelle23)
+                    if (akt - lastEnemy > level->timeBetweenWelle23)
                     {
                         welle = 3;
-                        level1.welle3Angefangen = true;
-                        enemy = level1.welle3.top();
-                        level1.welle3.pop();
+                        level->welle3Angefangen = true;
+                        enemy = level->welle3.top();
+                        level->welle3.pop();
                         bool weiter = true;
                         for (int i = 0; weiter == true and i < MaxEnemy; i++)
                         {
@@ -354,8 +355,8 @@ bool Game::level(unsigned int lastEnemy)
                 }
                 else
                 {
-                    enemy = level1.welle3.top();
-                    level1.welle3.pop();
+                    enemy = level->welle3.top();
+                    level->welle3.pop();
                     bool weiter = true;
                     for (int i = 0; weiter == true and i < MaxEnemy; i++)
                     {

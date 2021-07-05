@@ -162,6 +162,7 @@
     <ClInclude Include="defense.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="Level2.h" />
     <ClInclude Include="structs.h" />

@@ -23,7 +23,7 @@ class Game
 {
 public:
 	Game();
-	int init(int width, int height);
+	int init(int width, int height, Level *level);
 	void loop();
 	void cleanup();
 	int setDefense(int xC, int yC, AffinityType type, int price);
@@ -42,7 +42,7 @@ public:
 	void setNewRandomEnemy();
 	void DrawCircle(SDL_Renderer* renderer, int32_t centreX, int32_t centreY, int32_t radius);
 	void isInside2(int indexDefense, int indexEnemy);
-	bool level(unsigned int);
+	bool levelWelle(unsigned int);
 private:
 	bool verloren = false;
 	int indexTowerArray = 0;
@@ -62,7 +62,7 @@ private:
 	Defense towerArray[MaxTower];
 	Enemy enemyArray[MaxEnemy];
 	Attack attackArray[MaxAttack];
-	Level1 level1;
+	Level *level;
 	int liveEnemy = 0;
 	bool gewonnen = false;
 };

@@ -4,19 +4,17 @@
 
 #include "enemy.h"
 #include "structs.h"
+#include "Level.h"
 #include <stack>
 #include <iostream>
 
 using namespace std;
 
-class Level1 {
+class Level1 : public Level{
 public:
 	Level1();
-	stack <Enemy> welle1;
-	stack <Enemy> welle2;
-	stack <Enemy> welle3;
-	bool welle2Angefangen = false;
-	bool welle3Angefangen = false;
+	
+
 	typedef struct startWeg1
 	{
 		int x = 0;
@@ -38,12 +36,6 @@ public:
 
 	};
 	startWeg3 weg3;
-	bool fertig = false;
-	unsigned int timeBetweenWelle12 = 20000;
-	unsigned int timeBetweenWelle23 = 25000;
-
-	
-	Terrain field[25][20];
-};
+	};
 
 #endif
