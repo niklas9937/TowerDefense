@@ -19,9 +19,46 @@ Level2::Level2()
     Enemy enemy4(goblin, Point{ weg2.x,weg2.y });
     welle2.push(enemy4);
 
+    Enemy enemy6(goblin_knite, Point{ weg1.x,weg1.y });
+    welle2.push(enemy6);
+
+    Enemy enemy7(goblin_knite, Point{ weg1.x,weg1.y });
+    welle2.push(enemy7);
+
+    Enemy enemy8(slim_goblin, Point{ weg1.x,weg1.y });
+    welle2.push(enemy8);
+
     //Welle3
     Enemy enemy5(goblin, Point{ weg2.x,weg2.y });
     welle3.push(enemy5);
+
+    Enemy enemy9(goblin_knite, Point{ weg2.x,weg2.y });
+    welle3.push(enemy9);
+
+    Enemy enemy10(goblin_knite, Point{ weg2.x,weg2.y });
+    welle3.push(enemy10);
+
+    Enemy enemy11(goblin_knite, Point{ weg2.x,weg2.y });
+    welle3.push(enemy11);
+
+    Enemy enemy12(goblin_knite, Point{ weg2.x,weg2.y });
+    welle3.push(enemy12);
+
+    Enemy enemy13(goblin_knite, Point{ weg2.x,weg2.y });
+    welle3.push(enemy3);
+
+    Enemy enemy14(goblin_knite, Point{ weg1.x,weg1.y });
+    welle3.push(enemy14);
+
+    Enemy enemy15(goblin_knite, Point{ weg2.x,weg2.y });
+    welle3.push(enemy15);
+
+    Enemy enemy16(goblin_knite, Point{ weg1.x,weg1.y });
+    welle3.push(enemy16);
+
+
+
+
 
     field[0][6] = weg;
     field[1][6] = weg;
