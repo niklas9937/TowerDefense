@@ -22,6 +22,7 @@ int Game::init(int width, int height, Level *whichLevel) {
     width = height;
     TTF_Init();
     IMG_Init(IMG_INIT_PNG);
+    SDL_Init(SDL_INIT_AUDIO);
 
     m_window = SDL_CreateWindow("SDL Window",
         SDL_WINDOWPOS_UNDEFINED,
@@ -520,6 +521,15 @@ void Game::renderAttack(int index)
         //SDL_SetRenderDrawColor(m_renderer, 0, 0xff, 0xff, 0xff);
         SDL_RenderFillRect(m_renderer, &rect);
     }
+
+    
+
+    // Play music and a sound
+    playSound("BOWMEN1.wav", SDL_MIX_MAXVOLUME / 2);
+
+
+    // End Simple-SDL2-Audio
+    
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
 }
@@ -657,16 +667,20 @@ void Game::render()
     //Attacken auf dem Spielfeld laden
 
    
+    initAudio();
 
     for (int i = 0; i < MaxAttack ; i++)
     {
         if (attackArray[i].isInitialized == true)
         {
+
             renderAttack(i);
             attackArray[i].fly();
         }
     }
     
+    endAudio();
+
 
     // Wellenanzahl anzeigen
 

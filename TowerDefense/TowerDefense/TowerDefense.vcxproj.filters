@@ -36,6 +36,12 @@
     <ClCompile Include="Level2.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="audio.h">
+      <Filter>Headerdateien</Filter>
+    </ClCompile>
+    <ClCompile Include="audio.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
