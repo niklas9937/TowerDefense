@@ -8,31 +8,15 @@
 #include "Level2.h"
 #include "game.h"
 
-
+#include <string>
+#include <sstream>
 
 //Screen dimension constants
-const int WinWidth = 800;
-const int WinHeight = 800;
+const int WinWidth = 400;
+const int WinHeight = 300;
 
 
-
-
-
-int main(int argc, char* args[])
-{
-    Game game;
-    Level *level1= new Level1();
-    if (!game.init(WinWidth, WinHeight,level1))
-    {
-        return -1;
-    }
-    return 0;
-}
-
-
-
-
-int hi(int argc, char* args[])
+int hi()
 {
     // init sdl with video subsystem only and check if succeeded
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -41,6 +25,7 @@ int hi(int argc, char* args[])
         return -1;
     }
     // create window
+    TTF_Init();
     SDL_Window* sdlWindow = SDL_CreateWindow("SDL Window",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
@@ -58,21 +43,56 @@ int hi(int argc, char* args[])
 
     // attention... now leaving out checks
 
-    // clear background
-    // 1. set color to blue (r, g, b, a)
-    SDL_SetRenderDrawColor(sdlRenderer, 0x00, 0xa0, 0x00, 0x00);
-    // 2. clear all
     SDL_RenderClear(sdlRenderer);
 
     // draw a rect
     // 1. set color to cyan (r, g, b, a)
-    SDL_SetRenderDrawColor(sdlRenderer, 0xa0, 0xa0, 0xa0, 0xff);
-    // specify recht
-    // clear background: 1. specify rect
-    SDL_Rect sdlRect = { 100, 50, 10, 10 };
-    SDL_Rect sdlRect2 = { 120, 50, 10, 10 };
-    SDL_RenderFillRect(sdlRenderer, &sdlRect);
-    SDL_RenderFillRect(sdlRenderer, &sdlRect2);
+    SDL_SetRenderDrawColor(sdlRenderer, 255, 0, 0, 255);
+
+
+    //Überschrift
+    TTF_Font* Sans3 = TTF_OpenFont("arial.ttf", 17);
+    SDL_Color White3 = { 0xff, 0xff, 0xff };
+
+    std::ostringstream oss3;
+    oss3 << " Halihalo";
+    std::string var3 = oss3.str();
+
+
+
+    SDL_Surface* surfaceMessage3 = TTF_RenderText_Solid(Sans3, var3.c_str(), White3);
+    SDL_Texture* Message3 = SDL_CreateTextureFromSurface(sdlRenderer, surfaceMessage3);
+    SDL_Rect Message_rect3 = { 100,50,surfaceMessage3->w,surfaceMessage3->h }; //create a rect
+    SDL_RenderCopy(sdlRenderer, Message3, NULL, &Message_rect3);
+
+
+
+
+
+    SDL_FreeSurface(surfaceMessage3);
+    SDL_DestroyTexture(Message3);
+
+
+    //Level 1
+
+    std::ostringstream oss1;
+    oss1 << "1";
+    std::string var1 = oss1.str();
+
+
+
+    SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans3, var1.c_str(), White3);
+    SDL_Texture* Message1 = SDL_CreateTextureFromSurface(sdlRenderer, surfaceMessage1);
+    SDL_Rect Message_rect1 = { 20,70,surfaceMessage1->w,surfaceMessage1->h }; //create a rect
+    SDL_RenderCopy(sdlRenderer, Message1, NULL, &Message_rect1);
+
+
+
+
+
+    SDL_FreeSurface(surfaceMessage1);
+    SDL_DestroyTexture(Message1);
+
 
 
     // and show result
@@ -102,6 +122,23 @@ int hi(int argc, char* args[])
     SDL_DestroyWindow(sdlWindow);
     // finish
     SDL_Quit();
-
+    TTF_Quit();
     return 0;
 }
+
+
+int main(int argc, char* args[])
+{
+    Game game;
+    Level *level1= new Level1();
+    /**if (!game.init(WinWidth, WinHeight,level1))
+    {
+        return -1;
+    }**/
+    int o = hi();
+    return 0;
+}
+
+
+
+
