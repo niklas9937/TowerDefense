@@ -57,7 +57,7 @@ private:
 	SDL_Renderer* m_renderer;
 	SDL_Renderer* m_renderer2;
 	SDL_Texture* m_background;
-	int gold = 300;
+	int gold = 200;
 	void renderGoblin(int);
 	Defense towerArray[MaxTower];
 	Enemy enemyArray[MaxEnemy];

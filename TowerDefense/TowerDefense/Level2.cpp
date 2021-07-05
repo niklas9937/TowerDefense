@@ -43,6 +43,19 @@ Level2::Level2()
     Enemy enemy31(goblin_knite, Point{ weg1.x,weg1.y });
     welle2.push(enemy31);
 
+    Enemy enemy23(goblin, Point{ weg2.x,weg2.y });
+    welle2.push(enemy23);
+
+    Enemy enemy24(goblin_knite, Point{ weg1.x,weg1.y });
+    welle2.push(enemy24);
+
+    Enemy enemy25(goblin_knite, Point{ weg1.x,weg1.y });
+    welle2.push(enemy25);
+
+    Enemy enemy26(goblin, Point{ weg1.x,weg1.y });
+    welle2.push(enemy26);
+
+
     //Welle3
     Enemy enemy5(goblin, Point{ weg2.x,weg2.y });
     welle3.push(enemy5);
