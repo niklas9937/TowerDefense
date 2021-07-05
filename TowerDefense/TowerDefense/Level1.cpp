@@ -133,7 +133,7 @@ Level1::Level1()
     field[21][13] = weg;
     field[21][12] = weg;
     field[21][11] = weg;
-
+    
     field[21][10] = burg;
 
 
