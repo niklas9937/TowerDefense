@@ -212,20 +212,24 @@ int main(int argc, char* args[])
         if (levelauswahl == 1)
         {
             Level* level1 = new Level1();
-            if (!game.init(WinWidth, WinHeight, level1))
+            game.init(WinWidth, WinHeight, level1);
+
+            /**if (!game.init(WinWidth, WinHeight, level1))
             {
+                std::cout << "Drin" << std::endl;
                 weiter = false;
                 return -1;
-            }
+            }**/
         }
         else if (levelauswahl == 2)
         {
             Level* level1 = new Level2();
-            if (!game.init(WinWidth, WinHeight, level1))
+            game.init(WinWidth, WinHeight, level1);
+            /**if (!game.init(WinWidth, WinHeight, level1))
             {
                 weiter = false;
                 return -1;
-            }
+            }**/
         }
         else if (levelauswahl == 3)
         {
