@@ -1,6 +1,9 @@
 #include "Level2.h"
 Level2::Level2()
 {
+    levelAnzahl = 2;
+    bild = "Hintergrundlevel2.bmp";
+
     //Welle 1
     Enemy enemy1(goblin, Point{ weg1.x,weg1.y });
     welle1.push(enemy1);
@@ -16,6 +19,9 @@ Level2::Level2()
     Enemy enemy4(goblin, Point{ weg2.x,weg2.y });
     welle2.push(enemy4);
 
+    //Welle3
+    Enemy enemy5(goblin, Point{ weg2.x,weg2.y });
+    welle3.push(enemy5);
 
     field[0][6] = weg;
     field[1][6] = weg;

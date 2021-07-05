@@ -1,6 +1,9 @@
 #include "Level1.h"
 Level1::Level1()
 {
+    levelAnzahl = 1;
+    bild = "Hintergrund.bmp";
+
 	//Welle 1
 	Enemy enemy1(goblin, Point{ weg1.x,weg1.y });
 	welle1.push(enemy1);

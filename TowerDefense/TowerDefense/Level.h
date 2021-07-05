@@ -20,8 +20,8 @@ public:
 	bool welle2Angefangen = false;
 	bool welle3Angefangen = false;
 
-
-
+	std::string bild; 
+	int levelAnzahl;
 
 
 

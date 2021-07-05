@@ -37,7 +37,7 @@ int Game::init(int width, int height, Level *whichLevel) {
     m_renderer = SDL_CreateRenderer(m_window, -1, 0);
     m_renderer2 = SDL_CreateRenderer(m_window, 0, 0);
     m_background = NULL;
-    m_background = loadTexture("Hintergrund.bmp");
+    m_background = loadTexture(level->bild);
 
     if (m_background == NULL )
     {
@@ -685,7 +685,7 @@ void Game::render()
     SDL_RenderCopy(m_renderer, Message6, NULL, &Message_rect6);
 
     std::ostringstream oss7;
-    oss7 << "Level:   1 ";
+    oss7 << "Level:    "<<level->levelAnzahl;
     std::string var7 = oss7.str();
 
     SDL_Surface* surfaceMessage7 = TTF_RenderText_Solid(Sans6, var7.c_str(), White6);
