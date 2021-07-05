@@ -1,7 +1,7 @@
 #include "Level3.h"
 Level3::Level3()
 {
-    levelAnzahl = 1;
+    levelAnzahl = 3;
     bild = "HintergrundLevel3.bmp";
 
     //Welle 1
