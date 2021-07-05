@@ -94,3 +94,7 @@ Heute haben wir uns der feinheiten angenommen. Es ging uns heute darum das Spiel
 Dazu gibt es jetzt auch noch eine Levelanzeige wo angeziegt wird wie viele Wellen es in diesem Level zu besiegen sind und wie viele bereits besiegt wurden.
 
 ![Game](NeueFunktionen.JPG)
+
+
+**05.07.2021**
+Endspurt, unser Ziel war es weitere Level einzubauen. Dazu mussten wir doch noch etwas mehr ändern als wir dachten. Leztendlich haben wir es aber doch geschafft, es wurde ein Menü hinzugefügt wo man aus den Leveln wählen kann. Ist ein Level erfolgreich beendet worden, wird es danach im Menü grün hinterlegt, bei Fehlschlag rot. Wir haben Versucht Audio einzubauen, was allerdings nicht ganz funktioniert hat. Die Sounds haben aus irgendeinem grund die Performance des Spiels stark verschlechter und dazu noch keinen Ton abgespielt. Daher haben wir dieses Vorhaben abgebrochen. Es stehen nun 3 verschiedene Level zur Verfügung. Wir haben außerdem noch ein paar modifikationen an dem Balancing gemacht damit das Spiel nicht zu langweilig ist.  

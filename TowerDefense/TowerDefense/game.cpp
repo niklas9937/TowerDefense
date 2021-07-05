@@ -142,7 +142,7 @@ int Game::init(int width, int height, Level *whichLevel) {
                             case AffinityType::nothing: price = 0; break;
                             }
 
-                        if (gold - price > 0)
+                        if (gold - price >= 0)
                         {
                             int h = setDefense(x, y, selectedDefense, price);
                             gold = gold - price;
