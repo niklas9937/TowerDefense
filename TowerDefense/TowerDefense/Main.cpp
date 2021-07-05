@@ -99,7 +99,7 @@ int hi(int statusLevel1, int statusLevel2, int statusLevel3)
 
     SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans3, var1.c_str(), White3);
     SDL_Texture* Message1 = SDL_CreateTextureFromSurface(sdlRenderer, surfaceMessage1);
-    SDL_Rect Message_rect1 = { 30,100,surfaceMessage1->w,surfaceMessage1->h }; //create a rect
+    SDL_Rect Message_rect1 = { 40,100,surfaceMessage1->w,surfaceMessage1->h }; //create a rect
     SDL_RenderFillRect(sdlRenderer, &Message_rect1);
     SDL_RenderCopy(sdlRenderer, Message1, NULL, &Message_rect1);
 
@@ -129,7 +129,7 @@ int hi(int statusLevel1, int statusLevel2, int statusLevel3)
 
     SDL_Surface* surfaceMessage2 = TTF_RenderText_Solid(Sans3, var2.c_str(), White3);
     SDL_Texture* Message2 = SDL_CreateTextureFromSurface(sdlRenderer, surfaceMessage2);
-    SDL_Rect Message_rect2 = { 70,100,surfaceMessage2->w,surfaceMessage2->h }; //create a rect
+    SDL_Rect Message_rect2 = { 80,100,surfaceMessage2->w,surfaceMessage2->h }; //create a rect
     SDL_RenderFillRect(sdlRenderer, &Message_rect2);
     SDL_RenderCopy(sdlRenderer, Message2, NULL, &Message_rect2);
 
@@ -159,7 +159,7 @@ int hi(int statusLevel1, int statusLevel2, int statusLevel3)
 
     SDL_Surface* surfaceMessage3 = TTF_RenderText_Solid(Sans3, var3.c_str(), White3);
     SDL_Texture* Message3 = SDL_CreateTextureFromSurface(sdlRenderer, surfaceMessage3);
-    SDL_Rect Message_rect3 = { 110,100,surfaceMessage3->w,surfaceMessage3->h }; //create a rect
+    SDL_Rect Message_rect3 = { 120,100,surfaceMessage3->w,surfaceMessage3->h }; //create a rect
     SDL_RenderFillRect(sdlRenderer, &Message_rect3);
     SDL_RenderCopy(sdlRenderer, Message3, NULL, &Message_rect3);
 
