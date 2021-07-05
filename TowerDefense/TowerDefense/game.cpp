@@ -104,6 +104,12 @@ int Game::init(int width, int height, Level *whichLevel) {
             }
             if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
 
+                if (gewonnen == true or verloren == true)
+                {
+                    quit = true;
+                }
+
+
                 SDL_GetGlobalMouseState(&xMouse, &yMouse);
                 SDL_GetWindowPosition(m_window, &xwindow, &ywindow);
                 xMouse = xMouse - xwindow;
